@@ -2,8 +2,8 @@ import { db } from '../index';
 import { protocols } from '../schema';
 import { eq } from 'drizzle-orm';
 
-export function getAllProtocols() {
-  return db.select().from(protocols).orderBy(protocols.id);
+export async function getAllProtocols() {
+  return await db.select().from(protocols).orderBy(protocols.id);
 }
 
 export async function getProtocolById(id: number) {
