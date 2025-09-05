@@ -19,7 +19,7 @@ export async function saveNewProtocol(
     console.error('Error saving protocol:', error);
     return {
       success: false,
-      message: error,
+      message: 'Failed to save protocol',
     };
   }
 }
