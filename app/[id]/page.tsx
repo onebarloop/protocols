@@ -1,5 +1,5 @@
 import { getProtocolById } from '@/db/queries/select';
-import { Viewer } from '../components/Document';
+import { Viewer } from '../_components/document';
 
 export default async function ProtovolPage({
   params,

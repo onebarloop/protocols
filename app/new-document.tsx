@@ -1,7 +1,7 @@
 'use client';
 
-import { DownloadLink, Viewer } from './components/Document';
-import Editor from './components/Editor';
+import { DownloadLink } from './_components/document';
+import Editor from './_components/editor';
 import { useState } from 'react';
 
 export default function NewDocument() {

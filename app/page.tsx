@@ -1,4 +1,4 @@
-import NewDocument from './NewDocument';
+import NewDocument from './new-document';
 
 export default function Home() {
   return (
