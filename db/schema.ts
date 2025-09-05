@@ -5,6 +5,7 @@ export const protocols = pgTable('protocols', {
   name: text('name').notNull(),
   html: text('html'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  createdBy: text('created_by'),
 });
 
 export type InsertProtocol = typeof protocols.$inferInsert;
