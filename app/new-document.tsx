@@ -7,7 +7,7 @@ export default function NewDocument() {
   const { html, setHtml } = useDocument();
 
   return (
-    <div className="w-fit mx-auto">
+    <div className="mx-auto w-fit">
       <Editor html={html} setHtml={setHtml} />
     </div>
   );

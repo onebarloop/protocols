@@ -19,10 +19,10 @@ export default function RootLayout({
       <body>
         <SidebarProvider>
           <AppSidebar />
-          <div className="h-screen bg-sidebar/80 p-2 border-r">
+          <div className="bg-sidebar/80 h-screen border-r p-2">
             <SidebarTrigger />
           </div>
-          <main className="w-full h-screen overflow-auto">{children}</main>
+          <main className="h-screen w-full overflow-auto">{children}</main>
           <Toaster richColors />
         </SidebarProvider>
       </body>

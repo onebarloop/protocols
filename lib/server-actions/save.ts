@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { NewProtocol, SuccessMessage } from '@/types/db-types';
 
 export async function saveNewProtocol(
-  protocol: NewProtocol
+  protocol: NewProtocol,
 ): Promise<SuccessMessage> {
   try {
     await addProtocol(protocol);

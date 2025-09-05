@@ -8,7 +8,7 @@ type DocumentContextType = {
 };
 
 const DocumentContext = createContext<DocumentContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function useDocument() {

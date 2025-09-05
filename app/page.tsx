@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <DocumentProvider>
       <NewDocument />
-      <div className="absolute bottom-4 right-4 z-10">
+      <div className="absolute right-4 bottom-4 z-10">
         <SaveDocumentButton />
       </div>
     </DocumentProvider>

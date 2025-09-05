@@ -10,14 +10,14 @@ const PDFDownloadLink = dynamic(
   () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
   {
     ssr: false,
-  }
+  },
 );
 
 const PDFViewer = dynamic(
   () => import('@react-pdf/renderer').then((mod) => mod.PDFViewer),
   {
     ssr: false,
-  }
+  },
 );
 
 function PDF({ html }: { html: string }) {
