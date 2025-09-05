@@ -7,5 +7,5 @@ export const protocols = pgTable('protocols', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-export type InsertUser = typeof protocols.$inferInsert;
-export type SelectUser = typeof protocols.$inferSelect;
+export type InsertProtocol = typeof protocols.$inferInsert;
+export type SelectProtocol = typeof protocols.$inferSelect;
