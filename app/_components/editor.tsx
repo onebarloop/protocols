@@ -15,8 +15,8 @@ export default function Editor({
   }
 
   return (
-    <div className="editor">
-      <ReactEditor value={html} onChange={onChange} />
+    <div className="editor w-fit">
+      <ReactEditor className="w-a4 h-a4" value={html} onChange={onChange} />
     </div>
   );
 }

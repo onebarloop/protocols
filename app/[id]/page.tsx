@@ -1,7 +1,7 @@
 import { getProtocolById } from '@/db/queries/select';
 import { Viewer } from '../_components/document';
 
-export default async function ProtovolPage({
+export default async function ProtocolPage({
   params,
 }: {
   params: Promise<{ id: string }>;

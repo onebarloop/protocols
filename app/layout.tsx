@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { AppSidebar } from './_components/app-sidebar';
+import { AppSidebar } from './_components/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
@@ -20,10 +19,10 @@ export default function RootLayout({
       <body>
         <SidebarProvider>
           <AppSidebar />
-          <main className="w-full">
+          <div className="h-screen bg-sidebar/80 p-2 border-r">
             <SidebarTrigger />
-            {children}
-          </main>
+          </div>
+          <main className="w-full h-screen overflow-auto">{children}</main>
           <Toaster richColors />
         </SidebarProvider>
       </body>
