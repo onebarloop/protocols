@@ -1,6 +1,7 @@
 'use client';
 
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import HTMLSTYLESHEET from '../styles/pdf-stylesheet';
 import Html from 'react-pdf-html';
 
 import dynamic from 'next/dynamic';
@@ -12,26 +13,18 @@ const PDFDownloadLink = dynamic(
   }
 );
 
-const stylesheet = {
-  ul: {
-    listStyleType: 'disc',
-    paddingLeft: 20,
-  },
-  ol: {
-    listStyleType: 'decimal',
-    paddingLeft: 20,
-  },
-  h1: { fontSize: 24, marginBottom: 10, fontWeight: 'normal' },
-  h2: { fontSize: 20, marginBottom: 10, fontWeight: 'normal' },
-  h3: { fontSize: 18, marginBottom: 10, fontWeight: 'normal' },
-};
+const PDFViewer = dynamic(
+  () => import('@react-pdf/renderer').then((mod) => mod.PDFViewer),
+  {
+    ssr: false,
+  }
+);
 
-// Create Document Component
 function PDF({ html }: { html: string }) {
   return (
     <Document>
       <Page size="A4" orientation="portrait" style={{ padding: 20 }}>
-        <Html stylesheet={stylesheet}>{html}</Html>
+        <Html stylesheet={HTMLSTYLESHEET}>{html}</Html>
       </Page>
     </Document>
   );
@@ -56,4 +49,17 @@ function DownloadLink({ html }: { html?: string }) {
   );
 }
 
-export default DownloadLink;
+function Viewer({ html }: { html?: string }) {
+  if (!html) {
+    return null;
+  }
+  return (
+    <div style={{ height: '100vh' }}>
+      <PDFViewer key={html} width="100%" height="100%">
+        <PDF html={html} />
+      </PDFViewer>
+    </div>
+  );
+}
+
+export { DownloadLink, Viewer };

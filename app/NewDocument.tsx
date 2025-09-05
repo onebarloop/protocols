@@ -1,6 +1,6 @@
 'use client';
 
-import DownloadLink from './components/Document';
+import { DownloadLink, Viewer } from './components/Document';
 import Editor from './components/Editor';
 import { useState } from 'react';
 
