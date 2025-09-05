@@ -6,7 +6,7 @@ export async function getAllProtocols() {
   return await db.select().from(protocols).orderBy(protocols.id);
 }
 
-export async function getProtocolById(id: number) {
+export async function getProtocolById(id: string) {
   const result = await db.select().from(protocols).where(eq(protocols.id, id));
   return result[0] || null;
 }

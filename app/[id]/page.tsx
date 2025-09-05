@@ -8,6 +8,6 @@ export default async function ProtovolPage({
 }) {
   const { id } = await params;
 
-  const protocol = await getProtocolById(Number(id));
+  const protocol = await getProtocolById(id);
   return <Viewer html={protocol.html || ''} />;
 }
