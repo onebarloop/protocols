@@ -1,5 +1,5 @@
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
-import { CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Calendar, Home, Inbox } from 'lucide-react';
+import Link from 'next/link';
 
 import {
   Sidebar,
@@ -15,7 +15,11 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 
-export function AppSidebar() {
+import { getAllProtocols } from '@/db/queries/select';
+
+export async function AppSidebar() {
+  const protocols = await getAllProtocols();
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -25,36 +29,30 @@ export function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="#">
+                  <Link href="/">
                     <Home />
                     <span>Home</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <div>
                     <Inbox />
-                    <span>Test</span>
+                    <span>Protocols</span>
                   </div>
                 </SidebarMenuButton>
                 <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton asChild>
-                      <div>
-                        <Calendar />
-                        <span>Sub Item 1</span>
-                      </div>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton asChild>
-                      <div>
-                        <Calendar />
-                        <span>Sub Item 2</span>
-                      </div>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
+                  {protocols.map((protocol) => (
+                    <SidebarMenuSubItem key={protocol.id}>
+                      <SidebarMenuSubButton asChild>
+                        <Link href={`/${protocol.id}`}>
+                          <Calendar />
+                          <span>{protocol.name}</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  ))}
                 </SidebarMenuSub>
               </SidebarMenuItem>
             </SidebarMenu>
