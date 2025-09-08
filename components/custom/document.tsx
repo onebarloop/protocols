@@ -1,7 +1,7 @@
 'use client';
 
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import HTMLSTYLESHEET from '../_styles/pdf-stylesheet';
+import HTMLSTYLESHEET from '@/styles/pdf-stylesheet';
 import Html from 'react-pdf-html';
 
 import dynamic from 'next/dynamic';

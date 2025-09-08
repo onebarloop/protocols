@@ -1,6 +1,6 @@
 import NewDocument from './new-document';
-import { DocumentProvider } from './_contexts/document-context';
-import SaveDocumentButton from './_components/save-document-button';
+import { DocumentProvider } from '@/lib/context/document-context';
+import SaveDocumentButton from '@/components/custom/save-document-button';
 
 export default function Home() {
   return (

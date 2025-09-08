@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useDocument } from '../_contexts/document-context';
+import { useDocument } from '@/lib/context/document-context';
 import { saveNewProtocol } from '@/lib/server-actions/save';
 import { toast } from 'sonner';
 import { useTransition } from 'react';

@@ -1,5 +1,5 @@
 import { getProtocolById } from '@/db/queries/select';
-import { Viewer } from '../_components/document';
+import { Viewer } from '@/components/custom/document';
 
 export default async function ProtocolPage({
   params,

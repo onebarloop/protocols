@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { AppSidebar } from './_components/sidebar';
+import { AppSidebar } from '@/components/custom/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {

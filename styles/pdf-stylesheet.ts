@@ -1,5 +1,3 @@
-import { ST } from 'next/dist/shared/lib/utils';
-
 const HTMLSTYLESHEET = {
   ul: {
     listStyleType: 'disc',
