@@ -6,5 +6,7 @@ import { useDocument } from '../lib/context/document-context';
 export default function NewDocument() {
   const { html, setHtml } = useDocument();
 
-  return <Editor html={html} setHtml={setHtml} className="mx-auto w-a4 h-96 rounded" />;
+  return (
+    <Editor html={html} setHtml={setHtml} className="w-full h-full rounded" />
+  );
 }

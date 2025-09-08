@@ -121,6 +121,8 @@
 }
 
 @theme {
+  --max-width-a4: 210mm;
+  --max-height-a4: 297mm;
   --width-a4: 210mm;
   --height-a4: 297mm;
 }

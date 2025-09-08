@@ -1,4 +1,4 @@
-import { Inbox, Home } from 'lucide-react';
+import { Inbox, FilePlus } from 'lucide-react';
 
 import {
   Sidebar,
@@ -24,7 +24,7 @@ export async function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarItem name="Home" href="/" icon={<Home />} />
+              <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
               <SidebarItem name="Protocols" href="/protocols" icon={<Inbox />}>
                 <SidebarMenuSub>
                   {protocols.map((protocol) => (
