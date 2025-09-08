@@ -2,5 +2,4 @@
 
 /.next/
 
-/components
-/hooks
+/components/ui

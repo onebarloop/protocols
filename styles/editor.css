@@ -22,3 +22,8 @@
     margin-bottom: 0.5em;
   }
 }
+
+.rsw-editor {
+  height: 100%;
+  width: 100%;
+}

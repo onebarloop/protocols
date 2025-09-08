@@ -2,21 +2,24 @@
 
 import React from 'react';
 import ReactEditor from 'react-simple-wysiwyg';
+import { cn } from '@/lib/utils';
 
 export default function Editor({
   html,
   setHtml,
+  className,
 }: {
   html: string;
   setHtml: (html: string) => void;
+  className?: string;
 }) {
   function onChange(event: { target: { value: string } }): void {
     setHtml(event.target.value);
   }
 
   return (
-    <div className="editor w-fit">
-      <ReactEditor className="w-a4 h-a4" value={html} onChange={onChange} />
+    <div className={cn('editor', className)}>
+      <ReactEditor value={html} onChange={onChange} />
     </div>
   );
 }
