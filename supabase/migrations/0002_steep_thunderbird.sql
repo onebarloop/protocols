@@ -1,0 +1,1 @@
+ALTER TABLE "protocols" ALTER COLUMN "html" SET NOT NULL;

@@ -4,15 +4,15 @@ import { Button } from '@/components/ui/button';
 import { useDocument } from '@/lib/context/document-context';
 import { saveNewProtocol } from '@/lib/server-actions/save';
 import { toast } from 'sonner';
-import { useTransition } from 'react';
+import { use, useTransition } from 'react';
 
 export default function SaveDocumentButton() {
-  const { html } = useDocument();
+  const { protocolState } = useDocument();
   const [isPending, startTransition] = useTransition();
 
   const handleSave = () => {
     startTransition(async () => {
-      const result = await saveNewProtocol({ name: 'New Protocol', html });
+      const result = await saveNewProtocol(protocolState);
       if (result.success) {
         toast.success(result.message);
       } else {

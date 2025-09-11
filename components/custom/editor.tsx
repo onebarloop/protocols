@@ -9,7 +9,7 @@ export default function Editor({
   setHtml,
   className,
 }: {
-  html: string;
+  html: string | undefined;
   setHtml: (html: string) => void;
   className?: string;
 }) {

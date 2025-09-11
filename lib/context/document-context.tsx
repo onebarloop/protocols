@@ -1,15 +1,48 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useReducer,
+  ActionDispatch,
+} from 'react';
+import type { NewProtocol } from '@/types/db-types';
+
+type Action = {
+  type: 'setHtml' | 'setName';
+  payload: string;
+};
 
 type DocumentContextType = {
-  html: string;
-  setHtml: React.Dispatch<React.SetStateAction<string>>;
+  protocolState: NewProtocol;
+  protocolDispatch: ActionDispatch<[action: Action]>;
 };
+
+const initialState: NewProtocol = { name: 'New Protocol', html: 'Test' };
 
 const DocumentContext = createContext<DocumentContextType | undefined>(
   undefined,
 );
+
+function reducer(state: NewProtocol, action: Action) {
+  switch (action.type) {
+    case 'setHtml':
+      return {
+        ...state,
+        html: action.payload,
+      };
+    case 'setName':
+      return {
+        ...state,
+        name: action.payload,
+      };
+    // more cases yet to come
+    default:
+      return state;
+  }
+}
 
 export function useDocument() {
   const context = useContext(DocumentContext);
@@ -20,10 +53,10 @@ export function useDocument() {
 }
 
 export function DocumentProvider({ children }: { children: ReactNode }) {
-  const [html, setHtml] = useState('Start Writing...');
+  const [protocolState, protocolDispatch] = useReducer(reducer, initialState);
 
   return (
-    <DocumentContext.Provider value={{ html, setHtml }}>
+    <DocumentContext.Provider value={{ protocolState, protocolDispatch }}>
       {children}
     </DocumentContext.Provider>
   );

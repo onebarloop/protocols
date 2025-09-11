@@ -8,6 +8,9 @@ import { NewProtocol, SuccessMessage } from '@/types/db-types';
 export async function saveNewProtocol(
   protocol: NewProtocol,
 ): Promise<SuccessMessage> {
+  if (protocol.name.trim() === 'New Protocol') {
+    protocol.name = new Date().toLocaleDateString();
+  }
   try {
     await addProtocol(protocol);
     revalidatePath('/');
