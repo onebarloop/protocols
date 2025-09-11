@@ -1,0 +1,11 @@
+:root {
+  --a4-width: 210mm;
+  --a4-height: 297mm;
+}
+
+@theme inline {
+  --max-width-a4: var(--a4-width);
+  --max-height-a4: var(--a4-height);
+  --width-a4: var(--a4-width);
+  --height-a4: var(--a4-height);
+}

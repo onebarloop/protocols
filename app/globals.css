@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import '../styles/editor.css';
+@import '../styles/page-size.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -118,11 +119,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-@theme {
-  --max-width-a4: 210mm;
-  --max-height-a4: 297mm;
-  --width-a4: 210mm;
-  --height-a4: 297mm;
 }
