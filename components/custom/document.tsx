@@ -54,11 +54,9 @@ function Viewer({ html }: { html?: string }) {
     return null;
   }
   return (
-    <div style={{ height: '100vh' }}>
-      <PDFViewer key={html} width="100%" height="100%">
-        <PDF html={html} />
-      </PDFViewer>
-    </div>
+    <PDFViewer key={html} width="100%" height="100%">
+      <PDF html={html} />
+    </PDFViewer>
   );
 }
 

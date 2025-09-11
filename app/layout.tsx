@@ -22,7 +22,7 @@ export default function RootLayout({
           <div className="bg-sidebar/80 h-dvh border-r p-2">
             <SidebarTrigger />
           </div>
-          <main className="h-dvh w-full overflow-hidden p-4">{children}</main>
+          <main className="h-dvh w-full overflow-hidden">{children}</main>
           <Toaster richColors />
         </SidebarProvider>
       </body>
