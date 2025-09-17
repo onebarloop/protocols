@@ -1,7 +1,8 @@
 'use server';
 
-import { addProtocol } from '@/db/queries/insert';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
+import { db } from '@/db/index';
+import { protocols } from '@/db/schema';
 
 import { NewProtocol, SuccessMessage } from '@/types/db-types';
 
@@ -12,8 +13,11 @@ export async function saveNewProtocol(
     protocol.name = new Date().toLocaleDateString();
   }
   try {
-    await addProtocol(protocol);
-    revalidatePath('/');
+    await db.insert(protocols).values({
+      name: protocol.name,
+      html: protocol.html,
+    });
+    revalidateTag('allProtocols');
     return {
       success: true,
       message: 'Protocol saved successfully',

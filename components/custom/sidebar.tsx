@@ -10,7 +10,7 @@ import {
   SidebarMenuSub,
 } from '@/components/ui/sidebar';
 
-import { getAllProtocols } from '@/db/queries/select';
+import { getAllProtocols } from '@/lib/dal/queries';
 
 import { SidebarItem, SidebarSubItem } from './sidebar-items';
 

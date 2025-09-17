@@ -1,4 +1,4 @@
-import { getProtocolById } from '@/db/queries/select';
+import { getProtocolById } from '@/lib/dal/queries';
 import { Viewer } from '@/components/custom/document';
 import { notFound } from 'next/navigation';
 
@@ -9,15 +9,7 @@ export default async function ProtocolPage({
 }) {
   const { id } = await params;
 
-  const fetchProtocol = async (id: string) => {
-    try {
-      return await getProtocolById(id);
-    } catch (error) {
-      return null;
-    }
-  };
-
-  const protocol = await fetchProtocol(id);
+  const protocol = await getProtocolById(id);
 
   if (!protocol) {
     notFound();
