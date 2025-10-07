@@ -10,6 +10,10 @@ import {
 import { useParams } from 'next/navigation';
 import { Protocol } from '@/types/db-types';
 import { ReactNode } from 'react';
+import { Button } from '../ui/button';
+import { Trash } from 'lucide-react';
+import { deleteProtocol } from '@/lib/dal/mutations';
+import { toast } from 'sonner';
 
 export function SidebarItem({
   name,
@@ -38,12 +42,31 @@ export function SidebarItem({
 export function SidebarSubItem({ protocol }: { protocol: Protocol }) {
   const { id } = useParams();
 
+  const handleClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const result = await deleteProtocol(protocol.id);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.message);
+    }
+  };
+
   return (
     <SidebarMenuSubItem key={protocol.id}>
       <SidebarMenuSubButton asChild isActive={id === protocol.id}>
         <Link href={`/protocols/${protocol.id}`}>
           ❤️
           <span>{protocol.name}</span>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="ml-auto"
+            onClick={handleClick}
+          >
+            <Trash />
+          </Button>
         </Link>
       </SidebarMenuSubButton>
     </SidebarMenuSubItem>
