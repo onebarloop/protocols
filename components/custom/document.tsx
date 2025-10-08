@@ -1,6 +1,6 @@
 'use client';
 
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page } from '@react-pdf/renderer';
 import HTMLSTYLESHEET from '@/styles/pdf-stylesheet';
 import Html from 'react-pdf-html';
 
@@ -41,9 +41,7 @@ function DownloadLink({ html }: { html?: string }) {
         document={<PDF html={html} />}
         fileName="somename.pdf"
       >
-        {({ blob, url, loading, error }) =>
-          loading ? 'Loading document...' : 'Download now!'
-        }
+        {({ loading }) => (loading ? 'Loading document...' : 'Download now!')}
       </PDFDownloadLink>
     </div>
   );
