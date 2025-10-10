@@ -7,8 +7,10 @@ export const getAllProtocols = unstable_cache(
   async () => {
     return db.select().from(protocols).orderBy(asc(protocols.createdAt));
   },
-  ['protcols'],
-  { revalidate: 60, tags: ['allProtocols'] },
+  ['protocols'],
+  {
+    tags: ['allProtocols'],
+  },
 );
 
 export async function getProtocolById(id: string) {
