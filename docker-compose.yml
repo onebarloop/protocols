@@ -20,18 +20,6 @@ services:
     networks:
       - app-network
 
-  migrate:
-    build: .
-    container_name: protocols_migrate
-    environment:
-      DATABASE_URL: postgresql://postgres:password@postgres:5432/protocols
-    depends_on:
-      postgres:
-        condition: service_healthy
-    command: ["npx", "drizzle-kit", "push"]
-    networks:
-      - app-network
-
   app:
     build: .
     container_name: protocols_app
@@ -43,9 +31,9 @@ services:
       HOSTNAME: "0.0.0.0"
       DATABASE_URL: postgresql://postgres:password@postgres:5432/protocols
     depends_on:
-      migrate:
-        condition: service_completed_successfully
-    command: ["sh", "-c", "npm run build && npm start"]
+      postgres:
+        condition: service_healthy
+    command: ["sh", "-c", "npx drizzle-kit push && npm run build && npm start"]
     networks:
       - app-network
 
