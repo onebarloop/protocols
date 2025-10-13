@@ -1,0 +1,1 @@
+ALTER TABLE "protocols" ADD COLUMN "icon" text DEFAULT '🧪' NOT NULL;
