@@ -2,6 +2,8 @@ import NewDocument from './new-document';
 import { DocumentProvider } from '@/lib/context/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 
+import IconSelect from '@/components/custom/icon-select';
+
 export default function Home() {
   return (
     <DocumentProvider>
@@ -14,7 +16,8 @@ export default function Home() {
           <NewDocument />
         </div>
       </section>
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-4 right-4 z-10 flex gap-2">
+        <IconSelect />
         <SaveDocumentButton />
       </div>
     </DocumentProvider>
