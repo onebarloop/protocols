@@ -17,6 +17,7 @@ export async function saveNewProtocol(
     await db.insert(protocols).values({
       name: protocol.name,
       html: protocol.html,
+      icon: protocol.icon,
     });
     revalidateTag('allProtocols');
     return {

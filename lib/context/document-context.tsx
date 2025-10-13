@@ -10,7 +10,7 @@ import {
 import type { NewProtocol } from '@/types/db-types';
 
 type Action = {
-  type: 'setHtml' | 'setName';
+  type: 'setHtml' | 'setName' | 'setIcon';
   payload: string;
 };
 
@@ -19,7 +19,7 @@ type DocumentContextType = {
   protocolDispatch: ActionDispatch<[action: Action]>;
 };
 
-const initialState: NewProtocol = { name: 'New Protocol', html: 'Test' };
+const initialState: NewProtocol = { name: 'New Protocol', html: 'Test', icon: '🧪' };
 
 const DocumentContext = createContext<DocumentContextType | undefined>(
   undefined,
@@ -36,6 +36,11 @@ function reducer(state: NewProtocol, action: Action) {
       return {
         ...state,
         name: action.payload,
+      };
+    case 'setIcon':
+      return {
+        ...state,
+        icon: action.payload,
       };
     // more cases yet to come
     default:
