@@ -1,15 +1,17 @@
 import NewDocument from './new-document';
 import { DocumentProvider } from '@/lib/context/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
+import NameInput from '@/components/custom/name-input';
 
 import IconSelect from '@/components/custom/icon-select';
+import { Name } from 'drizzle-orm';
 
 export default function Home() {
   return (
     <DocumentProvider>
       <section className="max-w-a4 mx-auto flex h-full w-full flex-col p-4">
         <div className="mb-8">
-          <h1 className="text-2xl">New Document</h1>
+          <NameInput />
           <h2 className="text-foreground/50">Create a new document here</h2>
         </div>
         <div className="h-full max-h-full min-h-0">

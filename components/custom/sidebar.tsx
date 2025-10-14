@@ -21,7 +21,7 @@ export async function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>Protocols ❤️</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
