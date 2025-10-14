@@ -3,13 +3,22 @@
 //import Editor from '@/components/custom/editor';
 import { useDocument } from '../lib/context/document-context';
 import Editor from '@/components/custom/editor/editor-new';
+import { SerializedEditorState } from 'lexical';
 
 export default function NewDocument() {
   const { protocolState, protocolDispatch } = useDocument();
 
-  const setHtml = (html: string) => {
+  /*  const setHtml = (html: string) => {
     protocolDispatch({ type: 'setHtml', payload: html });
+  }; */
+
+  const setSerializedState = (serializedState: SerializedEditorState) => {
+    protocolDispatch({ type: 'setSerializedState', payload: serializedState });
   };
 
-  return <Editor onHtmlChange={(html) => setHtml(html)} />;
+  return (
+    <Editor
+      onSerializedChange={setSerializedState}
+    />
+  );
 }

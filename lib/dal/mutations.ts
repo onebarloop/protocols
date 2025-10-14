@@ -10,13 +10,22 @@ import { NewProtocol, SuccessMessage } from '@/types/db-types';
 export async function saveNewProtocol(
   protocol: NewProtocol,
 ): Promise<SuccessMessage> {
+  // Validate that serializedState is not null/undefined
+  if (!protocol.serializedState) {
+    return {
+      success: false,
+      message: 'Cannot save protocol: Editor content is required',
+    };
+  }
+
   if (protocol.name.trim() === 'New Protocol') {
     protocol.name = new Date().toLocaleDateString();
   }
+
   try {
     await db.insert(protocols).values({
       name: protocol.name,
-      html: protocol.html,
+      serializedState: protocol.serializedState,
       icon: protocol.icon,
     });
     revalidateTag('allProtocols');

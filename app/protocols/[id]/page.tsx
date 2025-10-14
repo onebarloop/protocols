@@ -1,6 +1,7 @@
 import { getProtocolById } from '@/lib/dal/queries';
 import { Viewer } from '@/components/custom/document';
 import { notFound } from 'next/navigation';
+import Editor from '@/components/custom/editor/editor-new';
 
 export default async function ProtocolPage({
   params,
@@ -15,5 +16,5 @@ export default async function ProtocolPage({
     notFound();
   }
 
-  return <Viewer html={protocol.html || ''} />;
+  return <Editor editorSerializedState={protocol.serializedState} />;
 }

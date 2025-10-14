@@ -5,32 +5,37 @@ import {
   useContext,
   ReactNode,
   useReducer,
-  ActionDispatch,
+  Dispatch,
 } from 'react';
 import type { NewProtocol } from '@/types/db-types';
+import type { SerializedEditorState } from 'lexical';
 
-type Action = {
-  type: 'setHtml' | 'setName' | 'setIcon';
-  payload: string;
-};
+type Action = 
+  | { type: 'setSerializedState'; payload: SerializedEditorState }
+  | { type: 'setName'; payload: string }
+  | { type: 'setIcon'; payload: string };
 
 type DocumentContextType = {
   protocolState: NewProtocol;
-  protocolDispatch: ActionDispatch<[action: Action]>;
+  protocolDispatch: Dispatch<Action>;
 };
 
-const initialState: NewProtocol = { name: 'New Protocol', html: 'Test', icon: '🧪' };
+const initialState: NewProtocol = { 
+  name: 'New Protocol', 
+  icon: '🧪',
+  serializedState: undefined 
+};
 
 const DocumentContext = createContext<DocumentContextType | undefined>(
   undefined,
 );
 
-function reducer(state: NewProtocol, action: Action) {
+function reducer(state: NewProtocol, action: Action): NewProtocol {
   switch (action.type) {
-    case 'setHtml':
+    case 'setSerializedState':
       return {
         ...state,
-        html: action.payload,
+        serializedState: action.payload,
       };
     case 'setName':
       return {

@@ -1,0 +1,1 @@
+ALTER TABLE "protocols" ADD COLUMN "serialized_state" jsonb;
