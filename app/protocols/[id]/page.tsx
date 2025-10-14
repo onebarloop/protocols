@@ -1,5 +1,4 @@
 import { getProtocolById } from '@/lib/dal/queries';
-import { Viewer } from '@/components/custom/document';
 import { notFound } from 'next/navigation';
 import Editor from '@/components/custom/editor/editor-new';
 

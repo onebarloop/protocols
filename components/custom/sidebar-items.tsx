@@ -55,7 +55,11 @@ export function SidebarSubItem({ protocol }: { protocol: Protocol }) {
 
   return (
     <SidebarMenuSubItem key={protocol.id}>
-      <SidebarMenuSubButton asChild isActive={id === protocol.id} className='h-auto min-h-fit'>
+      <SidebarMenuSubButton
+        asChild
+        isActive={id === protocol.id}
+        className="h-auto min-h-fit"
+      >
         <Link className="p-1" href={`/protocols/${protocol.id}`}>
           <span className="mr-1">{protocol.icon}</span>
           <span className="line-clamp-2">{protocol.name}</span>

@@ -6,7 +6,7 @@ import Editor from '@/components/custom/editor/editor-new';
 import { SerializedEditorState } from 'lexical';
 
 export default function NewDocument() {
-  const { protocolState, protocolDispatch } = useDocument();
+  const { protocolDispatch } = useDocument();
 
   /*  const setHtml = (html: string) => {
     protocolDispatch({ type: 'setHtml', payload: html });
@@ -16,9 +16,5 @@ export default function NewDocument() {
     protocolDispatch({ type: 'setSerializedState', payload: serializedState });
   };
 
-  return (
-    <Editor
-      onSerializedChange={setSerializedState}
-    />
-  );
+  return <Editor onSerializedChange={setSerializedState} />;
 }

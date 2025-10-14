@@ -10,7 +10,7 @@ import {
 import type { NewProtocol } from '@/types/db-types';
 import type { SerializedEditorState } from 'lexical';
 
-type Action = 
+type Action =
   | { type: 'setSerializedState'; payload: SerializedEditorState }
   | { type: 'setName'; payload: string }
   | { type: 'setIcon'; payload: string };
@@ -20,10 +20,10 @@ type DocumentContextType = {
   protocolDispatch: Dispatch<Action>;
 };
 
-const initialState: NewProtocol = { 
-  name: 'New Protocol', 
+const initialState: NewProtocol = {
+  name: 'New Protocol',
   icon: '🧪',
-  serializedState: undefined 
+  serializedState: undefined,
 };
 
 const DocumentContext = createContext<DocumentContextType | undefined>(
