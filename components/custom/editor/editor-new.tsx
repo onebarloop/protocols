@@ -5,9 +5,7 @@ import {
   LexicalComposer,
 } from "@lexical/react/LexicalComposer"
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin"
-import { $generateHtmlFromNodes } from "@lexical/html"
 import { EditorState, SerializedEditorState } from "lexical"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 
 import { editorTheme } from "@/components/editor/themes/editor-theme"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -26,14 +24,11 @@ const editorConfig: InitialConfigType = {
 
 function OnChangePluginWrapper({
   onChange,
-  onSerializedChange,
-  onHtmlChange,
+  onSerializedChange
 }: {
   onChange?: (editorState: EditorState) => void
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void
-  onHtmlChange?: (html: string) => void
 }) {
-  const [editor] = useLexicalComposerContext()
 
   return (
     <OnChangePlugin
@@ -41,12 +36,6 @@ function OnChangePluginWrapper({
       onChange={(editorState) => {
         onChange?.(editorState)
         onSerializedChange?.(editorState.toJSON())
-
-        // Generate HTML for database storage
-        editorState.read(() => {
-          const html = $generateHtmlFromNodes(editor)
-          onHtmlChange?.(html)
-        })
       }}
     />
   )
@@ -57,7 +46,6 @@ export default function Editor({
   editorSerializedState,
   onChange,
   onSerializedChange,
-  onHtmlChange,
 }: {
   editorState?: EditorState
   editorSerializedState?: SerializedEditorState
@@ -81,7 +69,6 @@ export default function Editor({
           <OnChangePluginWrapper
             onChange={onChange}
             onSerializedChange={onSerializedChange}
-            onHtmlChange={onHtmlChange}
           />
         </TooltipProvider>
       </LexicalComposer>
