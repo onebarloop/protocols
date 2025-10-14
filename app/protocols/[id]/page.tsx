@@ -1,6 +1,6 @@
 import { getProtocolById } from '@/lib/dal/queries';
 import { notFound } from 'next/navigation';
-import Editor from '@/components/custom/editor/editor-new';
+import Editor from '@/components/custom/editor/editor';
 
 export default async function ProtocolPage({
   params,

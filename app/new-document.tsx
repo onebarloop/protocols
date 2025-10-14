@@ -2,7 +2,7 @@
 
 //import Editor from '@/components/custom/editor';
 import { useDocument } from '../lib/context/document-context';
-import Editor from '@/components/custom/editor/editor-new';
+import Editor from '@/components/custom/editor/editor';
 import { SerializedEditorState } from 'lexical';
 
 export default function NewDocument() {
