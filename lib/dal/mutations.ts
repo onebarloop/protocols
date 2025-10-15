@@ -27,7 +27,7 @@ export async function saveNewProtocol(
       serializedState: protocol.serializedState,
       icon: protocol.icon,
     });
-    revalidateTag('allProtocols');
+    revalidateTag('protocols');
     return {
       success: true,
       message: 'Protocol saved successfully',
@@ -44,7 +44,8 @@ export async function saveNewProtocol(
 export async function deleteProtocol(id: string): Promise<SuccessMessage> {
   try {
     await db.delete(protocols).where(eq(protocols.id, id));
-    revalidateTag('allProtocols');
+    revalidateTag('protocols');
+    revalidateTag(`protocol-${id}`);
     return {
       success: true,
       message: 'Protocol deleted successfully',

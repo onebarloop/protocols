@@ -8,6 +8,7 @@ export type NewProtocol = Omit<
 };
 
 export type Protocol = SelectProtocol;
+export type ProtocolNavItem = Pick<SelectProtocol, 'id' | 'name' | 'icon'>;
 
 export type SuccessMessage = {
   success: boolean;

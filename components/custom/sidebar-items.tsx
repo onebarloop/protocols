@@ -8,12 +8,12 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { useParams } from 'next/navigation';
-import { Protocol } from '@/types/db-types';
 import { ReactNode } from 'react';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
 import { deleteProtocol } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
+import type { ProtocolNavItem } from '@/types/db-types';
 
 export function SidebarItem({
   name,
@@ -39,7 +39,7 @@ export function SidebarItem({
   );
 }
 
-export function SidebarSubItem({ protocol }: { protocol: Protocol }) {
+export function SidebarSubItem({ protocol }: { protocol: ProtocolNavItem }) {
   const { id } = useParams();
 
   const handleClick = async (e: React.MouseEvent) => {
