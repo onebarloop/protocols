@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/custom/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -16,13 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="overflow-hidden">
+      <body className="">
         <SidebarProvider>
           <AppSidebar />
-          <div className="bg-sidebar/80 h-dvh border-r p-2">
-            <SidebarTrigger />
-          </div>
-          <main className="h-dvh w-full overflow-hidden">{children}</main>
+          <main className="w-full overflow-hidden">{children}</main>
           <Toaster richColors />
         </SidebarProvider>
       </body>

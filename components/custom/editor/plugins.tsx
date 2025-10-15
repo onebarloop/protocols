@@ -27,11 +27,11 @@ export function Plugins() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative max-h-[calc(100dvh-2rem)] overflow-scroll">
       {/* toolbar plugins */}
       <ToolbarPlugin>
         {({ blockType }) => (
-          <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 overflow-auto border-b p-1">
+          <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 overflow-auto border-b bg-black p-1">
             <FontFormatToolbarPlugin />
 
             <BlockFormatDropDown>

@@ -3,11 +3,16 @@ import { Inbox, FilePlus } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuItem,
   SidebarMenuSub,
+  SidebarRail,
+  SidebarTrigger,
+  SidebarHeader,
+  SidebarSeparator,
 } from '@/components/ui/sidebar';
 
 import { getAllProtocols } from '@/lib/dal/queries';
@@ -18,10 +23,19 @@ export async function AppSidebar() {
   const protocols = await getAllProtocols();
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <span className="upper font-thin group-data-[collapsible=icon]:hidden">
+          Protocols
+        </span>
+        <div className="hidden justify-center group-data-[collapsible=icon]:flex">
+          ❤️
+        </div>
+      </SidebarHeader>
+      <SidebarSeparator className="!w-auto" />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Protocols ❤️</SidebarGroupLabel>
+          {/*     <SidebarGroupLabel>***</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
@@ -36,6 +50,14 @@ export async function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem className="flex justify-end">
+            <SidebarTrigger />
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }
