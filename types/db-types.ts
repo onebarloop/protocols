@@ -2,7 +2,7 @@ import { InsertProtocol, SelectProtocol } from '@/db/schema';
 
 export type NewProtocol = Omit<
   InsertProtocol,
-  'id' | 'createdAt' | 'createdBy' | 'serializedState'
+  'createdAt' | 'createdBy' | 'serializedState'
 > & {
   serializedState?: InsertProtocol['serializedState'];
 };

@@ -5,7 +5,7 @@ import { db } from '@/db/index';
 import { protocols } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-import { NewProtocol, SuccessMessage } from '@/types/db-types';
+import { NewProtocol, Protocol, SuccessMessage } from '@/types/db-types';
 
 export async function saveNewProtocol(
   protocol: NewProtocol,
@@ -55,6 +55,56 @@ export async function deleteProtocol(id: string): Promise<SuccessMessage> {
     return {
       success: false,
       message: 'Failed to delete protocol',
+    };
+  }
+}
+
+export async function updateProtocol(
+  protocol: Protocol,
+): Promise<SuccessMessage> {
+  if (!protocol.serializedState) {
+    return {
+      success: false,
+      message: 'Cannot update protocol: Editor content is required',
+    };
+  }
+
+  if (!protocol.id) {
+    return {
+      success: false,
+      message: 'Cannot update protocol: Protocol ID is required',
+    };
+  }
+
+  if (protocol.name.trim() === '') {
+    return {
+      success: false,
+      message: 'Cannot update protocol: Name is required',
+    };
+  }
+
+  try {
+    await db
+      .update(protocols)
+      .set({
+        name: protocol.name,
+        serializedState: protocol.serializedState,
+        icon: protocol.icon,
+      })
+      .where(eq(protocols.id, protocol.id));
+
+    revalidateTag('protocols');
+    revalidateTag(`protocol-${protocol.id}`);
+
+    return {
+      success: true,
+      message: 'Protocol updated successfully',
+    };
+  } catch (error) {
+    console.error('Error updating protocol:', error);
+    return {
+      success: false,
+      message: 'Failed to update protocol',
     };
   }
 }
