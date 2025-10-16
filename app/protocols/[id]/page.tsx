@@ -2,6 +2,7 @@ import { getProtocolById } from '@/lib/dal/queries';
 import { notFound } from 'next/navigation';
 import Editor from '@/components/custom/editor/editor';
 import { DocumentProvider } from '@/lib/context/document-context';
+import SaveDocumentButton from '@/components/custom/save-document-button';
 
 export default async function ProtocolPage({
   params,
@@ -26,6 +27,7 @@ export default async function ProtocolPage({
         <div className="h-full max-h-full min-h-0">
           <Editor editorSerializedState={protocol.serializedState} />
         </div>
+        <SaveDocumentButton />
       </section>
     </DocumentProvider>
   );

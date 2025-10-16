@@ -9,14 +9,15 @@ import {
 } from 'react';
 import type { NewProtocol, Protocol } from '@/types/db-types';
 import type { SerializedEditorState } from 'lexical';
+import { isExistingProtocol } from '@/types/typeguard';
 
 type Action =
   | { type: 'setSerializedState'; payload: SerializedEditorState }
   | { type: 'setName'; payload: string }
   | { type: 'setIcon'; payload: string };
 
-type DocumentContextType<T> = {
-  protocolState: T;
+type DocumentContextType = {
+  protocolState: NewProtocol | Protocol;
   protocolDispatch: Dispatch<Action>;
 };
 
@@ -26,9 +27,9 @@ const initialState: NewProtocol = {
   serializedState: undefined,
 };
 
-const DocumentContext = createContext<
-  DocumentContextType<NewProtocol> | DocumentContextType<Protocol> | undefined
->(undefined);
+const DocumentContext = createContext<DocumentContextType | undefined>(
+  undefined,
+);
 
 function reducer<T extends NewProtocol | Protocol>(
   state: T,
@@ -46,26 +47,13 @@ function reducer<T extends NewProtocol | Protocol>(
   }
 }
 
-// Overloaded hook signatures with proper constraints
-export function useDocument(): DocumentContextType<NewProtocol>;
-export function useDocument<T extends Protocol>(): DocumentContextType<T>;
-export function useDocument<
-  T extends NewProtocol | Protocol = NewProtocol,
->(): DocumentContextType<T> {
+export function useDocument(): DocumentContextType {
   const context = useContext(DocumentContext);
   if (!context) {
     throw new Error('useDocument must be used within a DocumentProvider');
   }
-  return context as DocumentContextType<T>;
+  return context;
 }
-
-export function DocumentProvider(props: {
-  children: ReactNode;
-}): React.JSX.Element;
-export function DocumentProvider<T extends Protocol>(props: {
-  children: ReactNode;
-  documentState: T;
-}): React.JSX.Element;
 
 export function DocumentProvider({
   children,
@@ -74,11 +62,8 @@ export function DocumentProvider({
   children: ReactNode;
   documentState?: Protocol;
 }) {
-  // Validate that if documentState is provided, it has required fields
-  if (documentState && !documentState.id) {
-    throw new Error(
-      'Protocol is missing id',
-    );
+  if (documentState && !isExistingProtocol(documentState)) {
+    throw new Error('Invalid protocol state provided to DocumentProvider');
   }
 
   const [protocolState, protocolDispatch] = useReducer(
@@ -91,8 +76,4 @@ export function DocumentProvider({
       {children}
     </DocumentContext.Provider>
   );
-}
-
-export function isExistingProtocol(protocol: NewProtocol | Protocol): protocol is Protocol {
-  return 'id' in protocol && protocol.id !== undefined;
 }
