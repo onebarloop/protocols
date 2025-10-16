@@ -15,10 +15,8 @@ export default function SaveDocumentButton() {
     startTransition(async () => {
       let result;
       if (isExistingProtocol(protocolState)) {
-        // TypeScript knows this is Protocol
         result = await updateProtocol(protocolState);
       } else {
-        // TypeScript knows this is NewProtocol
         result = await saveNewProtocol(protocolState);
       }
       if (result.success) {
@@ -29,7 +27,7 @@ export default function SaveDocumentButton() {
     });
   };
   return (
-    <Button variant="secondary" disabled={isPending} onClick={handleSave}>
+    <Button variant="outline" disabled={isPending} onClick={handleSave}>
       Save
     </Button>
   );

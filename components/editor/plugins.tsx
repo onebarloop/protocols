@@ -17,7 +17,7 @@ import { FormatBulletedList } from '@/components/editor/plugins/toolbar/block-fo
 import { FormatCheckList } from '@/components/editor/plugins/toolbar/block-format/format-check-list';
 import { FormatQuote } from '@/components/editor/plugins/toolbar/block-format/format-quote';
 
-export function Plugins({ readonly = false }: { readonly?: boolean }) {
+export function Plugins({ editable = true }: { editable?: boolean }) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
 
@@ -30,9 +30,9 @@ export function Plugins({ readonly = false }: { readonly?: boolean }) {
   return (
     <div className="relative max-h-[calc(100dvh-2rem)] overflow-scroll">
       {/* utility plugins */}
-      <EditablePlugin editable={!readonly} />
+      <EditablePlugin editable={editable} />
       {/* toolbar plugins */}
-      {!readonly && (
+      {editable && (
         <ToolbarPlugin>
           {() => (
             <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 overflow-auto border-b bg-black p-1">

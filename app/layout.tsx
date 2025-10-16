@@ -20,7 +20,7 @@ export default function RootLayout({
         <SidebarProvider>
           <AppSidebar />
           <main className="w-full overflow-hidden">{children}</main>
-          <Toaster richColors />
+          <Toaster richColors position="top-right" />
         </SidebarProvider>
       </body>
     </html>
