@@ -14,9 +14,11 @@ export default function Home() {
         </div>
         <Editor />
       </section>
-      <div className="absolute top-4 right-4 z-10 flex gap-2">
-        <IconSelect />
-        <SaveDocumentButton />
+      <div className="fixed right-10 bottom-10">
+        <div className="flex gap-2">
+          <IconSelect />
+          <SaveDocumentButton />
+        </div>
       </div>
     </DocumentProvider>
   );
