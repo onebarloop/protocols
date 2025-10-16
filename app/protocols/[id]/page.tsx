@@ -1,6 +1,6 @@
 import { getProtocolById } from '@/lib/dal/queries';
 import { notFound } from 'next/navigation';
-import Editor from '@/components/custom/editor/editor';
+import Editor from '@/components/editor/editor';
 import { DocumentProvider } from '@/lib/context/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import Link from 'next/link';
@@ -36,7 +36,7 @@ export default async function ProtocolPage({
           </div>
         </div>
         <div className="h-full max-h-full min-h-0">
-          <Editor editorSerializedState={protocol.serializedState} />
+          <Editor readonly={!isEditMode} editorSerializedState={protocol.serializedState} />
         </div>
       </section>
       <div className="fixed right-10 bottom-10">

@@ -45,10 +45,12 @@ export default function Editor({
   editorState,
   editorSerializedState,
   onChange,
+  readonly = false,
 }: {
   editorState?: EditorState;
   editorSerializedState?: SerializedEditorState;
   onChange?: (editorState: EditorState) => void;
+  readonly?: boolean;
 }) {
   const { protocolDispatch } = useDocument();
 
@@ -59,6 +61,7 @@ export default function Editor({
     <div className="bg-background overflow-hidden rounded-lg border shadow">
       <LexicalComposer
         initialConfig={{
+          editable: !readonly,
           ...editorConfig,
           ...(editorState ? { editorState } : {}),
           ...(editorSerializedState
@@ -67,7 +70,7 @@ export default function Editor({
         }}
       >
         <TooltipProvider>
-          <Plugins />
+          <Plugins readonly={readonly} />
           <OnChangePluginWrapper
             onChange={onChange}
             onSerializedChange={handleSerializedChange}

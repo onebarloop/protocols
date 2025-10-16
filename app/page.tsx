@@ -2,7 +2,7 @@ import { DocumentProvider } from '@/lib/context/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import NameInput from '@/components/custom/name-input';
 import IconSelect from '@/components/custom/icon-select';
-import Editor from '@/components/custom/editor/editor';
+import Editor from '@/components/editor/editor';
 
 export default function Home() {
   return (

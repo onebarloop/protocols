@@ -6,6 +6,7 @@ import { FontFormatToolbarPlugin } from '@/components/editor/plugins/toolbar/fon
 
 import { ContentEditable } from '@/components/editor/editor-ui/content-editable';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { EditablePlugin } from '@/components/editor/plugins/utility/editable-plugin';
 
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { BlockFormatDropDown } from '@/components/editor/plugins/toolbar/block-format-toolbar-plugin';
@@ -16,7 +17,7 @@ import { FormatBulletedList } from '@/components/editor/plugins/toolbar/block-fo
 import { FormatCheckList } from '@/components/editor/plugins/toolbar/block-format/format-check-list';
 import { FormatQuote } from '@/components/editor/plugins/toolbar/block-format/format-quote';
 
-export function Plugins() {
+export function Plugins({ readonly = false }: { readonly?: boolean }) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
 
@@ -28,23 +29,26 @@ export function Plugins() {
 
   return (
     <div className="relative max-h-[calc(100dvh-2rem)] overflow-scroll">
+      {/* utility plugins */}
+      <EditablePlugin editable={!readonly} />
       {/* toolbar plugins */}
-      <ToolbarPlugin>
-        {({ blockType }) => (
-          <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 overflow-auto border-b bg-black p-1">
-            <FontFormatToolbarPlugin />
-
-            <BlockFormatDropDown>
-              <FormatParagraph />
-              <FormatHeading levels={['h1', 'h2', 'h3']} />
-              <FormatNumberedList />
-              <FormatBulletedList />
-              <FormatCheckList />
-              <FormatQuote />
-            </BlockFormatDropDown>
-          </div>
-        )}
-      </ToolbarPlugin>
+      {!readonly && (
+        <ToolbarPlugin>
+          {() => (
+            <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 overflow-auto border-b bg-black p-1">
+              <FontFormatToolbarPlugin />
+              <BlockFormatDropDown>
+                <FormatParagraph />
+                <FormatHeading levels={['h1', 'h2', 'h3']} />
+                <FormatNumberedList />
+                <FormatBulletedList />
+                <FormatCheckList />
+                <FormatQuote />
+              </BlockFormatDropDown>
+            </div>
+          )}
+        </ToolbarPlugin>
+      )}
       <div className="relative">
         <RichTextPlugin
           contentEditable={
