@@ -7,7 +7,7 @@ import {
   useReducer,
   Dispatch,
 } from 'react';
-import type { NewProtocol } from '@/types/db-types';
+import type { NewProtocol, Protocol } from '@/types/db-types';
 import type { SerializedEditorState } from 'lexical';
 
 type Action =
@@ -61,8 +61,17 @@ export function useDocument() {
   return context;
 }
 
-export function DocumentProvider({ children }: { children: ReactNode }) {
-  const [protocolState, protocolDispatch] = useReducer(reducer, initialState);
+export function DocumentProvider({
+  children,
+  documentState,
+}: {
+  children: ReactNode;
+  documentState?: Protocol;
+}) {
+  const [protocolState, protocolDispatch] = useReducer(
+    reducer,
+    documentState || initialState,
+  );
 
   return (
     <DocumentContext.Provider value={{ protocolState, protocolDispatch }}>
