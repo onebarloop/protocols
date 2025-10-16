@@ -21,7 +21,6 @@ export const getAllProtocols = unstable_cache(
 export function getProtocolById(id: string) {
   return unstable_cache(
     () => {
-      console.log('CACHE MISS - fetching protocol', id);
       return db.query.protocols.findFirst({
         where: (protocols, { eq }) => eq(protocols.id, id),
       });
