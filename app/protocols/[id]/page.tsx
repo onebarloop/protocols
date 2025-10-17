@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NameInput from '@/components/custom/name-input';
+import ControlPanel from '@/components/custom/control-panel';
 
 export default async function ProtocolPage({
   params,
@@ -47,25 +48,25 @@ export default async function ProtocolPage({
           />
         </div>
       </section>
-      <div className="fixed right-10 bottom-10">
+      <ControlPanel>
         {isEditMode ? (
-          <div className="flex gap-2">
+          <>
             <SaveDocumentButton />
             <Button variant="secondary" size="icon" asChild>
               <Link href={`/protocols/${id}`}>
                 <X />
               </Link>
             </Button>
-          </div>
+          </>
         ) : (
-          <Button variant="outline" asChild>
+          <Button asChild>
             <Link href={`/protocols/${id}?edit=true`}>
               <Pencil />
               Edit protocol
             </Link>
           </Button>
         )}
-      </div>
+      </ControlPanel>
     </DocumentProvider>
   );
 }

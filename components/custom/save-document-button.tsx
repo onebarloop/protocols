@@ -27,7 +27,7 @@ export default function SaveDocumentButton() {
     });
   };
   return (
-    <Button variant="outline" disabled={isPending} onClick={handleSave}>
+    <Button disabled={isPending} onClick={handleSave}>
       Save
     </Button>
   );

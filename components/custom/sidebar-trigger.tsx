@@ -10,5 +10,5 @@ export default function SidebarTriggerMobile() {
     return null;
   }
 
-  return <SidebarTrigger className="fixed bottom-2 left-2"/>;
+  return <SidebarTrigger className="fixed bottom-2 left-2 z-10" />;
 }

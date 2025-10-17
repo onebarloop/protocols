@@ -3,6 +3,7 @@ import SaveDocumentButton from '@/components/custom/save-document-button';
 import NameInput from '@/components/custom/name-input';
 import IconSelect from '@/components/custom/icon-select';
 import Editor from '@/components/editor/editor';
+import ControlPanel from '@/components/custom/control-panel';
 
 export default function Home() {
   return (
@@ -14,12 +15,10 @@ export default function Home() {
         </div>
         <Editor />
       </section>
-      <div className="fixed right-10 bottom-10">
-        <div className="flex gap-2">
-          <IconSelect />
-          <SaveDocumentButton />
-        </div>
-      </div>
+      <ControlPanel>
+        <IconSelect />
+        <SaveDocumentButton />
+      </ControlPanel>
     </DocumentProvider>
   );
 }
