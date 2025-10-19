@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 import { db } from '@/db/index';
-import { protocols } from '@/db/schema';
+import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
 import { createRandomName } from '../utils';
 

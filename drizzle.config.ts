@@ -14,7 +14,7 @@ const envPath =
 config({ path: envPath });
 
 export default defineConfig({
-  schema: './db/schema.ts',
+  schema: './db/schema',
   out: './supabase/migrations',
   dialect: 'postgresql',
   dbCredentials: {

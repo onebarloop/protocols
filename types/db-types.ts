@@ -1,4 +1,4 @@
-import { InsertProtocol, SelectProtocol } from '@/db/schema';
+import { InsertProtocol, SelectProtocol } from '@/db/schema/protocols';
 
 export type NewProtocol = Omit<
   InsertProtocol,

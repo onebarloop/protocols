@@ -57,6 +57,13 @@
       "when": 1760877854796,
       "tag": "0007_mixed_joshua_kane",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1760898832516,
+      "tag": "0008_eminent_banshee",
+      "breakpoints": true
     }
   ]
 }
