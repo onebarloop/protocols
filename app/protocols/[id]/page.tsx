@@ -6,7 +6,7 @@ import SaveDocumentButton from '@/components/custom/save-document-button';
 import Link from 'next/link';
 import { Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import NameInput from '@/components/custom/name-input';
+import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
 
 export default async function ProtocolPage({
@@ -31,11 +31,7 @@ export default async function ProtocolPage({
     <DocumentProvider documentState={protocol}>
       <section className="max-w-a4 mx-auto flex h-full w-full flex-col p-4">
         <div className="mb-8">
-          {isEditMode ? (
-            <NameInput />
-          ) : (
-            <h1 className="text-2xl">{protocol.name}</h1>
-          )}
+          <ProtocolConfig isEditMode={isEditMode} />
 
           <div className="flex items-center gap-4">
             <h2 className="text-foreground/50">Edit document</h2>
@@ -59,12 +55,14 @@ export default async function ProtocolPage({
             </Button>
           </>
         ) : (
-          <Button variant="outline" asChild>
-            <Link href={`/protocols/${id}?edit=true`}>
-              <Pencil />
-              Edit protocol
-            </Link>
-          </Button>
+          <>
+            <Button variant="outline" asChild>
+              <Link href={`/protocols/${id}?edit=true`}>
+                <Pencil />
+                Edit protocol
+              </Link>
+            </Button>
+          </>
         )}
       </ControlPanel>
     </DocumentProvider>
