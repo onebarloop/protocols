@@ -52,14 +52,14 @@ export default async function ProtocolPage({
         {isEditMode ? (
           <>
             <SaveDocumentButton />
-            <Button variant="secondary" size="icon" asChild>
+            <Button variant="outline" size="icon" asChild>
               <Link href={`/protocols/${id}`}>
                 <X />
               </Link>
             </Button>
           </>
         ) : (
-          <Button asChild>
+          <Button variant="outline" asChild>
             <Link href={`/protocols/${id}?edit=true`}>
               <Pencil />
               Edit protocol
