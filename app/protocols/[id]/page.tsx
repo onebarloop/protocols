@@ -32,10 +32,17 @@ export default async function ProtocolPage({
       <section className="max-w-a4 mx-auto flex h-full w-full flex-col p-4">
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
-
-          <div className="flex items-center gap-4">
-            <h2 className="text-foreground/50">Edit document</h2>
-          </div>
+          <p className="text-foreground/50">
+            {new Date(protocol.createdAt).toLocaleTimeString([], {
+              minute: '2-digit',
+              hour: '2-digit',
+              day: '2-digit',
+              month: '2-digit',
+              year: '2-digit',
+            })}
+            {protocol.createdBy ? ` • © by ${protocol.createdBy}` : ''}
+            {protocol.editedBy ? ` • edited by ${protocol.editedBy}` : ''}
+          </p>
         </div>
         <div className="h-full max-h-full min-h-0">
           <Editor

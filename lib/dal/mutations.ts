@@ -4,8 +4,10 @@ import { revalidateTag } from 'next/cache';
 import { db } from '@/db/index';
 import { protocols } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { createRandomName } from '../utils';
 
 import { NewProtocol, Protocol, SuccessMessage } from '@/types/db-types';
+import { create } from 'domain';
 
 export async function saveNewProtocol(
   protocol: NewProtocol,
@@ -17,8 +19,8 @@ export async function saveNewProtocol(
     };
   }
 
-  if (protocol.name.trim() === 'New Protocol') {
-    protocol.name = new Date().toLocaleDateString();
+  if (protocol.name.trim() === '' || protocol.name === 'New Protocol') {
+    protocol.name = createRandomName({ type: 'animals' });
   }
 
   try {
@@ -26,6 +28,7 @@ export async function saveNewProtocol(
       name: protocol.name,
       serializedState: protocol.serializedState,
       icon: protocol.icon,
+      createdBy: createRandomName({ type: 'names' }), // Placeholder
     });
     revalidateTag('protocols');
     return {
@@ -90,6 +93,8 @@ export async function updateProtocol(
         name: protocol.name,
         serializedState: protocol.serializedState,
         icon: protocol.icon,
+        editedAt: new Date(),
+        editedBy: createRandomName({ type: 'names' }), // Placeholder
       })
       .where(eq(protocols.id, protocol.id));
 

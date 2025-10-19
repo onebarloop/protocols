@@ -45,7 +45,8 @@
     "react-pdf-html": "^2.1.3",
     "react-simple-wysiwyg": "^3.4.0",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

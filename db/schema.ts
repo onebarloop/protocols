@@ -8,7 +8,9 @@ export const protocols = pgTable('protocols', {
     .$type<SerializedEditorState>()
     .notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  editedAt: timestamp('edited_at'),
   createdBy: text('created_by'),
+  editedBy: text('edited_by'),
   icon: text('icon').default('🧪').notNull(),
 });
 
