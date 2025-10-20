@@ -5,13 +5,15 @@ import { db } from '@/db/index';
 import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
 import { createRandomName } from '../utils';
+import { getSession } from '@/lib/auth'; // path to your Better Auth server instance
 
 import { NewProtocol, Protocol, SuccessMessage } from '@/types/db-types';
-import { create } from 'domain';
 
 export async function saveNewProtocol(
   protocol: NewProtocol,
 ): Promise<SuccessMessage> {
+  const session = await getSession();
+
   if (!protocol.serializedState) {
     return {
       success: false,
@@ -28,7 +30,7 @@ export async function saveNewProtocol(
       name: protocol.name,
       serializedState: protocol.serializedState,
       icon: protocol.icon,
-      createdBy: createRandomName({ type: 'names' }), // Placeholder
+      authorId: session?.user?.id,
     });
     revalidateTag('protocols');
     return {
@@ -65,6 +67,8 @@ export async function deleteProtocol(id: string): Promise<SuccessMessage> {
 export async function updateProtocol(
   protocol: Protocol,
 ): Promise<SuccessMessage> {
+  const session = await getSession();
+
   if (!protocol.serializedState) {
     return {
       success: false,
@@ -94,7 +98,7 @@ export async function updateProtocol(
         serializedState: protocol.serializedState,
         icon: protocol.icon,
         editedAt: new Date(),
-        editedBy: createRandomName({ type: 'names' }), // Placeholder
+        editorId: session?.user?.id,
       })
       .where(eq(protocols.id, protocol.id));
 
