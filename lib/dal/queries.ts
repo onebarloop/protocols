@@ -18,11 +18,19 @@ export const getAllProtocols = unstable_cache(
   },
 );
 
+export type ProtocolNavItem = Awaited<
+  ReturnType<typeof getAllProtocols>
+>[number];
+
 export function getProtocolById(id: string) {
   return unstable_cache(
     () => {
       return db.query.protocols.findFirst({
         where: (protocols, { eq }) => eq(protocols.id, id),
+        with: {
+          author: true,
+          editor: true,
+        },
       });
     },
     ['protocol', id],
@@ -31,3 +39,5 @@ export function getProtocolById(id: string) {
     },
   )();
 }
+
+export type ProtocolQueryResult = Awaited<ReturnType<typeof getProtocolById>>;

@@ -1,6 +1,7 @@
 import { pgTable, text, timestamp, uuid, jsonb } from 'drizzle-orm/pg-core';
 import { SerializedEditorState } from 'lexical';
 import { user } from './auth-schema';
+import { relations } from 'drizzle-orm';
 
 export const protocols = pgTable('protocols', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -18,6 +19,17 @@ export const protocols = pgTable('protocols', {
   }),
   icon: text('icon').default('🧪').notNull(),
 });
+
+export const protocolsRelations = relations(protocols, ({ one }) => ({
+  author: one(user, {
+    fields: [protocols.authorId],
+    references: [user.id],
+  }),
+  editor: one(user, {
+    fields: [protocols.editorId],
+    references: [user.id],
+  }),
+}));
 
 export type InsertProtocol = typeof protocols.$inferInsert;
 export type SelectProtocol = typeof protocols.$inferSelect;

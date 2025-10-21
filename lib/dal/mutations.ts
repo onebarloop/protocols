@@ -30,7 +30,7 @@ export async function saveNewProtocol(
       name: protocol.name,
       serializedState: protocol.serializedState,
       icon: protocol.icon,
-      authorId: session?.user?.id,
+      authorId: session?.user?.id || null,
     });
     revalidateTag('protocols');
     return {
@@ -98,7 +98,7 @@ export async function updateProtocol(
         serializedState: protocol.serializedState,
         icon: protocol.icon,
         editedAt: new Date(),
-        editorId: session?.user?.id,
+        editorId: session?.user?.id || null,
       })
       .where(eq(protocols.id, protocol.id));
 

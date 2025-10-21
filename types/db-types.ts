@@ -1,16 +1,24 @@
 import { InsertProtocol, SelectProtocol } from '@/db/schema/protocols';
+import { ProtocolNavItem, ProtocolQueryResult } from '@/lib/dal/queries';
 
-export type NewProtocol = Omit<
+type NewProtocol = Omit<
   InsertProtocol,
   'createdAt' | 'createdBy' | 'serializedState'
 > & {
   serializedState?: InsertProtocol['serializedState'];
 };
 
-export type Protocol = SelectProtocol;
-export type ProtocolNavItem = Pick<SelectProtocol, 'id' | 'name' | 'icon'>;
+type Protocol = SelectProtocol;
 
-export type SuccessMessage = {
+type SuccessMessage = {
   success: boolean;
   message: string;
+};
+
+export type {
+  Protocol,
+  NewProtocol,
+  SuccessMessage,
+  ProtocolNavItem,
+  ProtocolQueryResult,
 };

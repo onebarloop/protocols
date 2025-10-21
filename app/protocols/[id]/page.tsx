@@ -32,7 +32,7 @@ export default async function ProtocolPage({
       <section className="max-w-a4 mx-auto flex h-full w-full flex-col p-4">
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
-          <p className="text-foreground/50">
+          <p className="text-foreground/50 text-sm">
             {new Date(protocol.createdAt).toLocaleTimeString([], {
               minute: '2-digit',
               hour: '2-digit',
@@ -40,8 +40,11 @@ export default async function ProtocolPage({
               month: '2-digit',
               year: '2-digit',
             })}
-            {protocol.createdBy ? ` • © by ${protocol.createdBy}` : ''}
-            {protocol.editedBy ? ` • edited by ${protocol.editedBy}` : ''}
+            <br />© by{' '}
+            {protocol.author?.name ? protocol.author.name : 'anonymous'}
+            {protocol.editor?.name
+              ? ` | Edited by ${protocol.editor.name}`
+              : ''}
           </p>
         </div>
         <div className="h-full max-h-full min-h-0">
