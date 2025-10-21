@@ -5,7 +5,7 @@ import { db } from '@/db/index';
 import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
 import { createRandomName } from '../utils';
-import { getSession } from '@/lib/auth'; // path to your Better Auth server instance
+import { getSession } from '@/lib/auth/auth'; // path to your Better Auth server instance
 
 import { NewProtocol, Protocol, SuccessMessage } from '@/types/db-types';
 

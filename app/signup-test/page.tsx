@@ -1,7 +1,7 @@
 'use client';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/lib/auth/auth-client';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/auth';
+import { auth } from '@/lib/auth/auth';
 
 export default function SignupTestPage() {
   const { data: session, isPending, error, refetch } = authClient.useSession();
@@ -10,9 +10,9 @@ export default function SignupTestPage() {
   const handleSignup = async () => {
     const { data, error } = await authClient.signUp.email(
       {
-        email: 'test@test.de',
+        email: 'test@dfsakon.de',
         password: 'passwort123',
-        name: 'Test',
+        name: 'Guest',
       },
       {
         onRequest: (ctx) => {

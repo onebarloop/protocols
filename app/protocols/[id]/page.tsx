@@ -8,6 +8,8 @@ import { Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
+import { getSession } from '@/lib/auth/auth';
+import { redirect } from 'next/navigation';
 
 export default async function ProtocolPage({
   params,
@@ -16,15 +18,20 @@ export default async function ProtocolPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ edit?: string }>;
 }) {
+  const session = await getSession();
   const { id } = await params;
   const { edit } = await searchParams;
-
+  const isGuest = session?.user?.role === 'guest';
   const isEditMode = edit === 'true';
 
   const protocol = await getProtocolById(id);
 
   if (!protocol) {
     notFound();
+  }
+
+  if (isGuest && isEditMode) {
+    redirect(`/protocols/${id}`);
   }
 
   return (
