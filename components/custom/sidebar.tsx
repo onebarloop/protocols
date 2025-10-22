@@ -15,12 +15,12 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar';
 
-import { getAllProtocols } from '@/lib/dal/queries';
+import { getProtocolNavItems } from '@/lib/dal/queries';
 
 import { SidebarItem, SidebarSubItem } from './sidebar-items';
 
 export async function AppSidebar() {
-  const protocols = await getAllProtocols();
+  const protocols = await getProtocolNavItems();
 
   return (
     <Sidebar collapsible="icon">

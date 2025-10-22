@@ -4,31 +4,42 @@ import { revalidateTag } from 'next/cache';
 import { db } from '@/db/index';
 import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
-import { createRandomName } from '../utils';
 import { getSession } from '@/lib/auth/auth';
-import { NewProtocol, Protocol, SuccessMessage } from '@/types/db-types';
+import { SuccessMessage } from '@/types/types';
+import { NewProtocol, Protocol } from '@/types/zod-schemas';
+import { ProtocolSchema, NewProtocolSchema } from '@/types/zod-schemas';
+import { createRandomName } from '../utils';
 
 export async function saveNewProtocol(
   protocol: NewProtocol,
 ): Promise<SuccessMessage> {
-  const session = await getSession();
+  const validationResult = NewProtocolSchema.safeParse(protocol);
 
-  if (!protocol.serializedState) {
+  if (!validationResult.success) {
+    console.error(
+      'Validation error saving new protocol:',
+      validationResult.error,
+    );
     return {
       success: false,
-      message: 'Cannot save protocol: Editor content is required',
+      message: 'Failed to save protocol: Invalid data',
     };
   }
 
-  if (protocol.name.trim() === '' || protocol.name === 'New Protocol') {
-    protocol.name = createRandomName({ type: 'animals' });
-  }
+  const validatedProtocol = validationResult.data;
+
+  const name =
+    validatedProtocol.name === '' || validatedProtocol.name === 'New Protocol'
+      ? createRandomName({ type: 'animals' })
+      : validatedProtocol.name;
+
+  const session = await getSession();
 
   try {
     await db.insert(protocols).values({
-      name: protocol.name,
-      serializedState: protocol.serializedState,
-      icon: protocol.icon,
+      name,
+      serializedState: validatedProtocol.serializedState,
+      icon: validatedProtocol.icon,
       authorId: session?.user?.id || null,
     });
     revalidateTag('protocols');
@@ -40,7 +51,7 @@ export async function saveNewProtocol(
     console.error('Error saving protocol:', error);
     return {
       success: false,
-      message: 'Failed to save protocol',
+      message: 'Failed to save protocol. Error in database operation',
     };
   }
 }
@@ -58,7 +69,7 @@ export async function deleteProtocol(id: string): Promise<SuccessMessage> {
     console.error('Error deleting protocol:', error);
     return {
       success: false,
-      message: 'Failed to delete protocol',
+      message: 'Failed to delete protocol. Error in database operation',
     };
   }
 }
@@ -66,43 +77,36 @@ export async function deleteProtocol(id: string): Promise<SuccessMessage> {
 export async function updateProtocol(
   protocol: Protocol,
 ): Promise<SuccessMessage> {
+  const validationResult = ProtocolSchema.safeParse(protocol);
+
+  if (!validationResult.success) {
+    console.error(
+      'Validation error updating protocol:',
+      validationResult.error,
+    );
+    return {
+      success: false,
+      message: 'Failed to update protocol: Invalid data',
+    };
+  }
+
+  const validatedProtocol = validationResult.data;
   const session = await getSession();
-
-  if (!protocol.serializedState) {
-    return {
-      success: false,
-      message: 'Cannot update protocol: Editor content is required',
-    };
-  }
-
-  if (!protocol.id) {
-    return {
-      success: false,
-      message: 'Cannot update protocol: Protocol ID is required',
-    };
-  }
-
-  if (protocol.name.trim() === '') {
-    return {
-      success: false,
-      message: 'Cannot update protocol: Name is required',
-    };
-  }
 
   try {
     await db
       .update(protocols)
       .set({
-        name: protocol.name,
-        serializedState: protocol.serializedState,
-        icon: protocol.icon,
+        name: validatedProtocol.name,
+        serializedState: validatedProtocol.serializedState,
+        icon: validatedProtocol.icon,
         editedAt: new Date(),
         editorId: session?.user?.id || null,
       })
-      .where(eq(protocols.id, protocol.id));
+      .where(eq(protocols.id, validatedProtocol.id));
 
     revalidateTag('protocols');
-    revalidateTag(`protocol-${protocol.id}`);
+    revalidateTag(`protocol-${validatedProtocol.id}`);
 
     return {
       success: true,
@@ -112,7 +116,7 @@ export async function updateProtocol(
     console.error('Error updating protocol:', error);
     return {
       success: false,
-      message: 'Failed to update protocol',
+      message: 'Failed to update protocol. Error in database operation',
     };
   }
 }

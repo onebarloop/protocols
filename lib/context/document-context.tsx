@@ -7,7 +7,7 @@ import {
   useReducer,
   Dispatch,
 } from 'react';
-import type { NewProtocol, Protocol } from '@/types/db-types';
+import type { NewProtocol, Protocol } from '@/types/zod-schemas';
 import type { SerializedEditorState } from 'lexical';
 import { isExistingProtocol } from '@/types/typeguard';
 

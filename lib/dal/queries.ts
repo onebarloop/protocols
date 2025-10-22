@@ -1,7 +1,7 @@
 import { db } from '@/db/index';
 import { unstable_cache } from 'next/cache';
 
-export const getAllProtocols = unstable_cache(
+export const getProtocolNavItems = unstable_cache(
   () => {
     return db.query.protocols.findMany({
       columns: {
@@ -18,8 +18,8 @@ export const getAllProtocols = unstable_cache(
   },
 );
 
-export type ProtocolNavItem = Awaited<
-  ReturnType<typeof getAllProtocols>
+export type ProtocolNavItemsQueryResult = Awaited<
+  ReturnType<typeof getProtocolNavItems>
 >[number];
 
 export async function getProtocolById(id: string) {
