@@ -40,7 +40,7 @@ export async function AppSidebar() {
             <SidebarMenu>
               <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
               <SidebarItem name="Protocols" href="/protocols" icon={<Inbox />}>
-                <SidebarMenuSub>
+                <SidebarMenuSub className="mr-0 pr-0">
                   {protocols.map((protocol) => (
                     <SidebarSubItem key={protocol.id} protocol={protocol} />
                   ))}
