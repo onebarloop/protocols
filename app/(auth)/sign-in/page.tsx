@@ -26,10 +26,5 @@ export default function SignInPage() {
     );
   };
 
-  return (
-    <div>
-      Sign In Page
-      <Button onClick={handleSignIn}>Sign in</Button>
-    </div>
-  );
+  return <Button onClick={handleSignIn}>Sign in</Button>;
 }
