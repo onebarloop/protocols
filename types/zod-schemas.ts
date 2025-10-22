@@ -1,11 +1,26 @@
 import { z } from 'zod';
+import type { SerializedEditorState } from 'lexical';
 
-export const ProtocolSchema = z.object({
+export { ProtocolSchema, NewProtocolSchema };
+export type { Protocol, NewProtocol };
+
+const SerializedEditorStateSchema: z.ZodType<SerializedEditorState> = z.object({
+  root: z.object({
+    children: z.array(z.any()),
+    direction: z
+      .union([z.literal('ltr'), z.literal('rtl'), z.null()])
+      .optional(),
+    format: z.union([z.string(), z.number()]).optional(),
+    indent: z.number().optional(),
+    type: z.string(),
+    version: z.number().optional(),
+  }),
+}) as z.ZodType<SerializedEditorState>;
+
+const ProtocolSchema = z.object({
   id: z.uuid(),
   name: z.string().nonempty('Name is required'),
-  serializedState: z.any().refine((val) => val != null, {
-    message: 'serializedState is required',
-  }),
+  serializedState: SerializedEditorStateSchema,
   createdAt: z.union([z.date(), z.string()]),
   editedAt: z.union([z.date(), z.string()]).nullable(),
   authorId: z.string().nullable(),
@@ -13,14 +28,12 @@ export const ProtocolSchema = z.object({
   icon: z.string(),
 });
 
-export type Protocol = z.infer<typeof ProtocolSchema>;
+type Protocol = z.infer<typeof ProtocolSchema>;
 
-export const NewProtocolSchema = z.object({
+const NewProtocolSchema = z.object({
   name: z.string(),
-  serializedState: z.any().refine((val) => val != null, {
-    message: 'serializedState is required',
-  }),
+  serializedState: SerializedEditorStateSchema,
   icon: z.string().optional(),
 });
 
-export type NewProtocol = z.infer<typeof NewProtocolSchema>;
+type NewProtocol = z.infer<typeof NewProtocolSchema>;
