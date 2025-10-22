@@ -1,7 +1,6 @@
 'use client';
 import { authClient } from '@/lib/auth/auth-client';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/auth/auth';
 
 export default function SignupTestPage() {
   const { data: session, isPending, error, refetch } = authClient.useSession();
