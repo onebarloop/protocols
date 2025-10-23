@@ -56,7 +56,6 @@ export default function LoginForm() {
           }, 1500);
         },
         onError: (ctx) => {
-          console.log(ctx.error);
           setIsPending(false);
           setPassword('');
           toast.error(ctx.error?.message || 'Login failed');

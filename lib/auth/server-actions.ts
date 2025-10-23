@@ -26,7 +26,7 @@ export async function login(
     }
     return { success: true, message: `Logged in!` };
   } catch (error) {
-    console.log('Login error:', error);
+    console.error('Login error:', error);
     return {
       success: false,
       message: 'An error occurred during login. Please try again later.',
