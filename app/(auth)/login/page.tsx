@@ -1,5 +1,10 @@
 import LoginForm from '@/components/custom/login-form';
+import { Suspense } from 'react';
 
 export default async function SignInPage() {
-  return <LoginForm />;
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
+  );
 }
