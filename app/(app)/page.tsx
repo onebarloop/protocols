@@ -3,8 +3,10 @@ import SaveDocumentButton from '@/components/custom/save-document-button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import Editor from '@/components/editor/editor';
 import ControlPanel from '@/components/custom/control-panel';
+import { getSession } from '@/lib/auth/get-session';
 
-export default function Home() {
+export default async function Home() {
+  await getSession();
   return (
     <DocumentProvider>
       <section className="max-w-a4 relative mx-auto w-full p-4">

@@ -8,8 +8,13 @@ import { Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
-import { getSession } from '@/lib/auth/auth';
+import { getSession } from '@/lib/auth/get-session';
 import { redirect } from 'next/navigation';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export default async function ProtocolPage({
   params,
@@ -18,10 +23,10 @@ export default async function ProtocolPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ edit?: string }>;
 }) {
-  const session = await getSession();
+  const { user } = await getSession();
   const { id } = await params;
   const { edit } = await searchParams;
-  const isGuest = session?.user?.role === 'guest';
+  const isGuest = user.role === 'guest';
   const isEditMode = edit === 'true';
 
   const protocol = await getProtocolById(id);
@@ -71,15 +76,27 @@ export default async function ProtocolPage({
               </Link>
             </Button>
           </>
+        ) : isGuest ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span tabIndex={0}>
+                <Button variant="outline" disabled>
+                  <Pencil />
+                  Edit protocol
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Edit disabled as guest</p>
+            </TooltipContent>
+          </Tooltip>
         ) : (
-          <>
-            <Button variant="outline" asChild>
-              <Link href={`/protocols/${id}?edit=true`}>
-                <Pencil />
-                Edit protocol
-              </Link>
-            </Button>
-          </>
+          <Button variant="outline" asChild>
+            <Link href={`/protocols/${id}?edit=true`}>
+              <Pencil />
+              Edit protocol
+            </Link>
+          </Button>
         )}
       </ControlPanel>
     </DocumentProvider>

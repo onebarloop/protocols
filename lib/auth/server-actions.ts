@@ -2,7 +2,6 @@
 
 'use server';
 import { auth } from '@/lib/auth/auth';
-import { getSession } from '@/lib/auth/auth';
 export async function login(
   prevState: { success: boolean; message: string },
   formData: FormData,
@@ -25,8 +24,7 @@ export async function login(
         message: 'Login failed. Please check your credentials.',
       };
     }
-    const session = await getSession();
-    return { success: true, message: `Logged in as ${session?.user.name}` };
+    return { success: true, message: `Logged in!` };
   } catch (error) {
     console.log('Login error:', error);
     return {
