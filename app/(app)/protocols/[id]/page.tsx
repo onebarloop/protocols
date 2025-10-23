@@ -8,6 +8,13 @@ import { Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
+import { getSession } from '@/lib/auth/get-session';
+import { redirect } from 'next/navigation';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export default async function ProtocolPage({
   params,
@@ -16,9 +23,10 @@ export default async function ProtocolPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ edit?: string }>;
 }) {
+  const { user } = await getSession();
   const { id } = await params;
   const { edit } = await searchParams;
-
+  const isGuest = user.role === 'guest';
   const isEditMode = edit === 'true';
 
   const protocol = await getProtocolById(id);
@@ -27,12 +35,16 @@ export default async function ProtocolPage({
     notFound();
   }
 
+  if (isGuest && isEditMode) {
+    redirect(`/protocols/${id}`);
+  }
+
   return (
     <DocumentProvider documentState={protocol}>
       <section className="max-w-a4 mx-auto flex h-full w-full flex-col p-4">
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
-          <p className="text-foreground/50">
+          <p className="text-foreground/50 text-sm">
             {new Date(protocol.createdAt).toLocaleTimeString([], {
               minute: '2-digit',
               hour: '2-digit',
@@ -40,8 +52,11 @@ export default async function ProtocolPage({
               month: '2-digit',
               year: '2-digit',
             })}
-            {protocol.createdBy ? ` • © by ${protocol.createdBy}` : ''}
-            {protocol.editedBy ? ` • edited by ${protocol.editedBy}` : ''}
+            <br />© by{' '}
+            {protocol.author?.name ? protocol.author.name : 'anonymous'}
+            {protocol.editor?.name
+              ? ` | Edited by ${protocol.editor.name}`
+              : ''}
           </p>
         </div>
         <div className="h-full max-h-full min-h-0">
@@ -61,15 +76,27 @@ export default async function ProtocolPage({
               </Link>
             </Button>
           </>
+        ) : isGuest ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span tabIndex={0}>
+                <Button variant="outline" disabled>
+                  <Pencil />
+                  Edit protocol
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Edit disabled as guest</p>
+            </TooltipContent>
+          </Tooltip>
         ) : (
-          <>
-            <Button variant="outline" asChild>
-              <Link href={`/protocols/${id}?edit=true`}>
-                <Pencil />
-                Edit protocol
-              </Link>
-            </Button>
-          </>
+          <Button variant="outline" asChild>
+            <Link href={`/protocols/${id}?edit=true`}>
+              <Pencil />
+              Edit protocol
+            </Link>
+          </Button>
         )}
       </ControlPanel>
     </DocumentProvider>

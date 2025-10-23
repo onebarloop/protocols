@@ -7,9 +7,9 @@ import {
   useReducer,
   Dispatch,
 } from 'react';
-import type { NewProtocol, Protocol } from '@/types/db-types';
-import type { SerializedEditorState } from 'lexical';
-import { isExistingProtocol } from '@/types/typeguard';
+import type { NewProtocol, Protocol } from '@/types/zod-schemas';
+import type { SerializedEditorState, SerializedElementNode } from 'lexical';
+import { isExistingProtocol } from '@/types/helpers';
 
 type Action =
   | { type: 'setSerializedState'; payload: SerializedEditorState }
@@ -24,7 +24,27 @@ type DocumentContextType = {
 const initialState: NewProtocol = {
   name: 'New Protocol',
   icon: '🧪',
-  serializedState: undefined,
+  serializedState: {
+    root: {
+      children: [
+        {
+          children: [],
+          direction: null,
+          format: '',
+          indent: 0,
+          type: 'paragraph',
+          version: 1,
+          textFormat: 0,
+          textStyle: '',
+        } as SerializedElementNode,
+      ],
+      direction: null,
+      format: '',
+      indent: 0,
+      type: 'root',
+      version: 1,
+    },
+  },
 };
 
 const DocumentContext = createContext<DocumentContextType | undefined>(

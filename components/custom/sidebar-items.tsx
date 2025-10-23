@@ -13,7 +13,7 @@ import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
 import { deleteProtocol } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
-import type { ProtocolNavItem } from '@/types/db-types';
+import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 
 export function SidebarItem({
   name,
@@ -39,7 +39,11 @@ export function SidebarItem({
   );
 }
 
-export function SidebarSubItem({ protocol }: { protocol: ProtocolNavItem }) {
+export function SidebarSubItem({
+  protocol,
+}: {
+  protocol: ProtocolNavItemsQueryResult;
+}) {
   const { id } = useParams();
 
   const handleClick = async (e: React.MouseEvent) => {

@@ -5,7 +5,7 @@ import { useDocument } from '@/lib/context/document-context';
 import { saveNewProtocol, updateProtocol } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
-import { isExistingProtocol } from '@/types/typeguard';
+import { isExistingProtocol } from '@/types/helpers';
 
 export default function SaveDocumentButton() {
   const { protocolState } = useDocument();

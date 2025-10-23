@@ -15,12 +15,12 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar';
 
-import { getAllProtocols } from '@/lib/dal/queries';
+import { getProtocolNavItems } from '@/lib/dal/queries';
 
 import { SidebarItem, SidebarSubItem } from './sidebar-items';
 
 export async function AppSidebar() {
-  const protocols = await getAllProtocols();
+  const protocols = await getProtocolNavItems();
 
   return (
     <Sidebar collapsible="icon">
@@ -40,7 +40,7 @@ export async function AppSidebar() {
             <SidebarMenu>
               <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
               <SidebarItem name="Protocols" href="/protocols" icon={<Inbox />}>
-                <SidebarMenuSub>
+                <SidebarMenuSub className="mr-0 pr-0">
                   {protocols.map((protocol) => (
                     <SidebarSubItem key={protocol.id} protocol={protocol} />
                   ))}

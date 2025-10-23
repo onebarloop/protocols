@@ -25,7 +25,7 @@ export function createRandomName(
     customConfig = {
       dictionaries: [colors, animals],
       style: 'capital',
-      separator: '*',
+      separator: '',
     };
   }
 
