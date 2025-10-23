@@ -13,8 +13,8 @@ import { useSearchParams } from 'next/navigation';
 export default function LoginForm() {
   const callbackUrl = useSearchParams().get('callbackUrl') || '/';
   const router = useRouter();
-  const [email, setEmail] = useState('test@test.de');
-  const [password, setPassword] = useState('passwort123');
+  const [email, setEmail] = useState('guest@test.de');
+  const [password, setPassword] = useState('password123');
   const [isPending, setIsPending] = useState(false);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -44,7 +44,7 @@ export default function LoginForm() {
         rememberMe: false,
       },
       {
-        onRequest: (ctx) => {
+        onRequest: () => {
           setIsPending(true);
         },
         onSuccess: (ctx) => {

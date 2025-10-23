@@ -1,6 +1,5 @@
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/custom/sidebar';
-import { Toaster } from '@/components/ui/sonner';
 import SidebarTrigger from '@/components/custom/sidebar-trigger';
 import { cookies } from 'next/headers';
 
