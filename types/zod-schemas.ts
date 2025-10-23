@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import type { SerializedEditorState } from 'lexical';
 
-export { ProtocolSchema, NewProtocolSchema };
-export type { Protocol, NewProtocol };
+export { ProtocolSchema, NewProtocolSchema, LoginSchema };
+export type { Protocol, NewProtocol, Login };
 
 const SerializedEditorStateSchema: z.ZodType<SerializedEditorState> = z.object({
   root: z.object({
@@ -37,3 +37,13 @@ const NewProtocolSchema = z.object({
 });
 
 type NewProtocol = z.infer<typeof NewProtocolSchema>;
+
+const LoginSchema = z.object({
+  email: z.email('Please enter a valid email address'),
+  password: z
+    .string({ message: 'Password is required' })
+    .min(1, 'Password is required')
+    .min(6, 'Password must be at least 6 characters long'),
+});
+
+type Login = z.infer<typeof LoginSchema>;

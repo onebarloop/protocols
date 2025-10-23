@@ -5,6 +5,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db } from '@/db';
 import { headers } from 'next/headers';
 import { rolePlugin } from './plugins';
+import { nextCookies } from 'better-auth/next-js';
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -13,7 +14,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [rolePlugin()],
+  plugins: [nextCookies(), rolePlugin()],
 });
 
 export const getSession = async () => {

@@ -17,7 +17,6 @@ export default async function AppLayout({
       <SidebarTrigger />
       <AppSidebar />
       <main className="w-full overflow-hidden">{children}</main>
-      <Toaster richColors position="top-right" />
     </SidebarProvider>
   );
 }
