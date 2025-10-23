@@ -34,6 +34,19 @@ export async function saveNewProtocol(
       : validatedProtocol.name;
 
   const session = await getSession();
+  if (!session) {
+    return {
+      success: false,
+      message: 'User not authenticated',
+    };
+  }
+
+  if (session.user.role === 'guest') {
+    return {
+      success: false,
+      message: 'Guest users cannot save protocols. Please sign up.',
+    };
+  }
 
   try {
     await db.insert(protocols).values({
@@ -57,6 +70,21 @@ export async function saveNewProtocol(
 }
 
 export async function deleteProtocol(id: string): Promise<SuccessMessage> {
+  const session = await getSession();
+  if (!session) {
+    return {
+      success: false,
+      message: 'User not authenticated',
+    };
+  }
+
+  if (session.user.role === 'guest') {
+    return {
+      success: false,
+      message: 'Guest users cannot delete protocols. Please sign up.',
+    };
+  }
+
   try {
     await db.delete(protocols).where(eq(protocols.id, id));
     revalidateTag('protocols');
@@ -91,7 +119,21 @@ export async function updateProtocol(
   }
 
   const validatedProtocol = validationResult.data;
+
   const session = await getSession();
+  if (!session) {
+    return {
+      success: false,
+      message: 'User not authenticated',
+    };
+  }
+
+  if (session.user.role === 'guest') {
+    return {
+      success: false,
+      message: 'Guest users cannot edit protocols. Please sign up.',
+    };
+  }
 
   try {
     await db
