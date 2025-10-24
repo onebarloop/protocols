@@ -67,7 +67,7 @@ A modern Next.js web application for creating, editing, and managing collaborati
 - `npm run db:reset` - Reset database
 - `npm run db:generate` - Generate database migrations
 - `npm run db:push` - Push database schema changes
-- `npm run init:users` -
+- `npm run init:users` - Add initial users to the database
 
 ## Disclaimer
 
