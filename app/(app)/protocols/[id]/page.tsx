@@ -1,6 +1,5 @@
 import { getProtocolById } from '@/lib/dal/queries';
 import { notFound } from 'next/navigation';
-import Editor from '@/components/editor/editor';
 import { DocumentProvider } from '@/lib/context/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import Link from 'next/link';
@@ -15,6 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import EditorWrapper from '@/components/custom/editor-wrapper';
 
 export default async function ProtocolPage({
   params,
@@ -59,7 +59,7 @@ export default async function ProtocolPage({
               : ''}
           </p>
         </div>
-        <Editor
+        <EditorWrapper
           editable={isEditMode}
           editorSerializedState={protocol.serializedState}
         />

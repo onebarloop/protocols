@@ -13,6 +13,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { nodes } from './nodes';
 import { Plugins } from './plugins';
 import { useDocument } from '@/lib/context/document-context';
+import { on } from 'events';
 
 const editorConfig: InitialConfigType = {
   namespace: 'Editor',
@@ -46,17 +47,19 @@ export default function Editor({
   editorSerializedState,
   onChange,
   editable = true,
+  onSerializedChange,
 }: {
   editorState?: EditorState;
   editorSerializedState?: SerializedEditorState;
   onChange?: (editorState: EditorState) => void;
   editable?: boolean;
+  onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
 }) {
-  const { protocolDispatch } = useDocument();
+  //const { protocolDispatch } = useDocument();
 
-  const handleSerializedChange = (serializedState: SerializedEditorState) => {
+  /*  const handleSerializedChange = (serializedState: SerializedEditorState) => {
     protocolDispatch({ type: 'setSerializedState', payload: serializedState });
-  };
+  }; */
   return (
     <div className="bg-background rounded-lg border shadow">
       <LexicalComposer
@@ -71,10 +74,12 @@ export default function Editor({
       >
         <TooltipProvider>
           <Plugins editable={editable} />
-          <OnChangePluginWrapper
-            onChange={onChange}
-            onSerializedChange={handleSerializedChange}
-          />
+          {(onChange || onSerializedChange) && (
+            <OnChangePluginWrapper
+              onChange={onChange}
+              onSerializedChange={onSerializedChange}
+            />
+          )}
         </TooltipProvider>
       </LexicalComposer>
     </div>

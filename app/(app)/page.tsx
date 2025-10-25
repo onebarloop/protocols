@@ -1,9 +1,9 @@
 import { DocumentProvider } from '@/lib/context/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import ProtocolConfig from '@/components/custom/protocol-config';
-import Editor from '@/components/editor/editor';
 import ControlPanel from '@/components/custom/control-panel';
 import { getSession } from '@/lib/auth/get-session';
+import EditorWrapper from '@/components/custom/editor-wrapper';
 
 export default async function Home() {
   await getSession();
@@ -14,7 +14,7 @@ export default async function Home() {
           <ProtocolConfig isEditMode />
           <h2 className="text-foreground/50">Create a new document here</h2>
         </div>
-        <Editor />
+        <EditorWrapper />
       </section>
       <ControlPanel>
         <SaveDocumentButton />

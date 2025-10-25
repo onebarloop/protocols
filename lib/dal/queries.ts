@@ -22,6 +22,22 @@ export type ProtocolNavItemsQueryResult = Awaited<
   ReturnType<typeof getProtocolNavItems>
 >[number];
 
+export const getAllProtocols = unstable_cache(
+  () => {
+    return db.query.protocols.findMany({
+      with: {
+        author: true,
+        editor: true,
+      },
+      orderBy: (protocols, { asc }) => [asc(protocols.createdAt)],
+    });
+  },
+  ['protocols'],
+  {
+    tags: ['protocols'],
+  },
+);
+
 export async function getProtocolById(id: string) {
   try {
     return await unstable_cache(
