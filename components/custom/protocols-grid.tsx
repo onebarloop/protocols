@@ -4,15 +4,18 @@ import { AllProtocolsQueryResult } from '@/lib/dal/queries';
 import Editor from '@/components/editor/editor';
 import { convertDate } from '@/lib/utils';
 import Link from 'next/link';
+import { use } from 'react';
 
 export default function ProtocolsGrid({
   protocols,
 }: {
-  protocols: AllProtocolsQueryResult[];
+  protocols: Promise<AllProtocolsQueryResult[]>;
 }) {
+  const allProtocols = use(protocols);
+
   return (
     <div className="w-full grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4 sm:grid">
-      {protocols.map((protocol) => (
+      {allProtocols.map((protocol) => (
         <ProtocolCard key={protocol.id} protocol={protocol} />
       ))}
     </div>

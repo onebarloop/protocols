@@ -1,15 +1,19 @@
 import { getSession } from '@/lib/auth/get-session';
 import { getAllProtocols } from '@/lib/dal/queries';
 import ProtocolsGrid from '@/components/custom/protocols-grid';
+import { Suspense } from 'react';
+import GridSkeleton from '@/app/(app)/protocols/grid-skeleton';
 
 export default async function ProtocolsPage() {
   await getSession();
-  const protocols = await getAllProtocols();
+  const protocols = getAllProtocols();
 
   return (
     <section className="max-w-8xl mx-auto">
       <h1 className="mb-6 text-2xl">Protocols Overview</h1>
-      <ProtocolsGrid protocols={protocols} />
+      <Suspense fallback={<GridSkeleton />}>
+        <ProtocolsGrid protocols={protocols} />
+      </Suspense>
     </section>
   );
 }
