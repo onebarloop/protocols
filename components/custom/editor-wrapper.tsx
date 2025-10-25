@@ -7,6 +7,7 @@ type EditorWrapperProps = {
   editorState?: EditorState;
   editorSerializedState?: SerializedEditorState;
   editable?: boolean;
+  className?: string;
 };
 
 export default function EditorWrapper(props: EditorWrapperProps) {

@@ -8,11 +8,21 @@ import {
   names,
 } from 'unique-names-generator';
 
-export function cn(...inputs: ClassValue[]) {
+function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function createRandomName(
+function convertDate(date: Date): string {
+  return new Date(date).toLocaleTimeString([], {
+    minute: '2-digit',
+    hour: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+  });
+}
+
+function createRandomName(
   { type }: { type: 'animals' | 'names' } = { type: 'animals' },
 ) {
   let customConfig: Config = { dictionaries: [] };
@@ -31,3 +41,5 @@ export function createRandomName(
 
   return uniqueNamesGenerator(customConfig);
 }
+
+export { convertDate, cn, createRandomName };

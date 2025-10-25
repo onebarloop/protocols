@@ -12,9 +12,9 @@ export const getProtocolNavItems = unstable_cache(
       orderBy: (protocols, { asc }) => [asc(protocols.createdAt)],
     });
   },
-  ['protocols'],
+  ['protocols-nav'],
   {
-    tags: ['protocols'],
+    tags: ['protocols-nav', 'protocols'],
   },
 );
 
@@ -38,6 +38,10 @@ export const getAllProtocols = unstable_cache(
   },
 );
 
+export type AllProtocolsQueryResult = Awaited<
+  ReturnType<typeof getAllProtocols>
+>[number];
+
 export async function getProtocolById(id: string) {
   try {
     return await unstable_cache(
@@ -52,7 +56,7 @@ export async function getProtocolById(id: string) {
       },
       ['protocol', id],
       {
-        tags: [`protocol-${id}`],
+        tags: [`protocol-${id}`, 'protocols'],
       },
     )();
   } catch (error) {
