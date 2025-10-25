@@ -28,14 +28,14 @@ export function Plugins({ editable = true }: { editable?: boolean }) {
   };
 
   return (
-    <div className="relative max-h-[calc(100dvh-2rem)] overflow-scroll">
+    <div>
       {/* utility plugins */}
       <EditablePlugin editable={editable} />
       {/* toolbar plugins */}
       {editable && (
         <ToolbarPlugin>
           {() => (
-            <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 overflow-auto border-b bg-black p-1">
+            <div className="vertical-align-middle bg-background sticky top-0 z-10 flex gap-2 overflow-auto rounded-t-lg border-b p-1">
               <FontFormatToolbarPlugin />
               <BlockFormatDropDown>
                 <FormatParagraph />

@@ -15,7 +15,7 @@ export default async function AppLayout({
     <SidebarProvider defaultOpen={defaultOpen}>
       <SidebarTrigger />
       <AppSidebar />
-      <main className="w-full overflow-hidden">{children}</main>
+      <main className="w-full p-4">{children}</main>
     </SidebarProvider>
   );
 }

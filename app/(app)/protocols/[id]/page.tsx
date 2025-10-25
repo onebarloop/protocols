@@ -41,7 +41,7 @@ export default async function ProtocolPage({
 
   return (
     <DocumentProvider documentState={protocol}>
-      <section className="max-w-a4 mx-auto flex w-full flex-col p-4">
+      <section className="max-w-a4 relative mx-auto w-full">
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
           <p className="text-foreground/50 text-sm">

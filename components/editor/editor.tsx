@@ -58,7 +58,7 @@ export default function Editor({
     protocolDispatch({ type: 'setSerializedState', payload: serializedState });
   };
   return (
-    <div className="bg-background overflow-hidden rounded-lg border shadow">
+    <div className="bg-background rounded-lg border shadow">
       <LexicalComposer
         initialConfig={{
           editable,
