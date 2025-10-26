@@ -1,4 +1,4 @@
-// Now used right now. Signin is handled client side
+// Not used right now. Signin is via auth client
 
 'use server';
 import { auth } from '@/lib/auth/auth';

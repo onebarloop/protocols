@@ -1,11 +1,9 @@
-import { getSession } from '@/lib/auth/get-session';
 import { getAllProtocols } from '@/lib/dal/queries';
 import ProtocolsGrid from '@/components/custom/protocols-grid';
 import { Suspense } from 'react';
 import GridSkeleton from '@/app/(app)/protocols/grid-skeleton';
 
 export default async function ProtocolsPage() {
-  await getSession();
   const protocols = getAllProtocols();
 
   return (
