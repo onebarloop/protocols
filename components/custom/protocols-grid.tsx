@@ -2,9 +2,9 @@
 
 import { AllProtocolsQueryResult } from '@/lib/dal/queries';
 import Editor from '@/components/editor/editor';
-import { convertDate } from '@/lib/utils';
 import Link from 'next/link';
 import { use } from 'react';
+import ClientDate from './client-date';
 
 export default function ProtocolsGrid({
   protocols,
@@ -14,7 +14,7 @@ export default function ProtocolsGrid({
   const allProtocols = use(protocols);
 
   return (
-    <div className="w-full grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4 sm:grid">
+    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]">
       {allProtocols.map((protocol) => (
         <ProtocolCard key={protocol.id} protocol={protocol} />
       ))}
@@ -40,7 +40,7 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
       />
       <div className="flex flex-wrap justify-between gap-x-4 border-t px-4 py-2">
         <p className="text-muted-foreground text-xs">
-          {convertDate(protocol.createdAt)}
+          <ClientDate date={protocol.createdAt} />
         </p>
         <p className="text-muted-foreground text-xs">
           by {protocol.author?.name || 'deleted user'}

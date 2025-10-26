@@ -15,7 +15,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import EditorWrapper from '@/components/custom/editor-wrapper';
-import { convertDate } from '@/lib/utils';
+import ClientDate from '@/components/custom/client-date';
 
 export default async function ProtocolPage({
   params,
@@ -46,7 +46,7 @@ export default async function ProtocolPage({
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
           <p className="text-foreground/50 text-sm">
-            {convertDate(protocol.createdAt)}
+            <ClientDate date={protocol.createdAt} />
             <br />© by{' '}
             {protocol.author?.name ? protocol.author.name : 'anonymous'}
             {protocol.editor?.name
