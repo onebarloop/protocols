@@ -27,14 +27,14 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
     <Link
       href={`/protocols/${protocol.id}`}
       key={protocol.id}
-      className="hover:border-accent-foreground/40 group flex flex-col overflow-hidden rounded-lg border transition-all"
+      className="hover:border-accent-foreground/40 group flex flex-col overflow-hidden rounded-lg border shadow transition-all"
     >
       <h2 className="bg-card/60 group-hover:bg-card flex flex-wrap gap-2 border-b px-4 py-3 transition-colors">
         {protocol.icon} {protocol.name}
       </h2>
 
       <Editor
-        className="h-96 grow overflow-auto border-0"
+        className="h-96 grow overflow-auto border-0 shadow-none"
         editable={false}
         editorSerializedState={protocol.serializedState}
       />
