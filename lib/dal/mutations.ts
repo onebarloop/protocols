@@ -1,6 +1,6 @@
 'use server';
 
-import { updateTag } from 'next/cache';
+import { updateTag, revalidatePath } from 'next/cache';
 import { db } from '@/db/index';
 import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
@@ -55,7 +55,8 @@ export async function saveNewProtocol(
       icon: validatedProtocol.icon,
       authorId: session?.user?.id || null,
     });
-    updateTag('protocols');
+    revalidatePath('/protocols');
+    updateTag('protocols-nav');
     return {
       success: true,
       message: 'Protocol saved successfully',
@@ -87,8 +88,9 @@ export async function deleteProtocol(id: string): Promise<SuccessMessage> {
 
   try {
     await db.delete(protocols).where(eq(protocols.id, id));
-    updateTag('protocols');
-    updateTag(`protocol-${id}`);
+    revalidatePath(`/protocols/${id}`);
+    revalidatePath('/protocols');
+    updateTag('protocols-nav');
     return {
       success: true,
       message: 'Protocol deleted successfully',
@@ -147,8 +149,9 @@ export async function updateProtocol(
       })
       .where(eq(protocols.id, validatedProtocol.id));
 
-    updateTag('protocols');
-    updateTag(`protocol-${validatedProtocol.id}`);
+    revalidatePath('/protocols');
+    revalidatePath(`/protocols/${validatedProtocol.id}`);
+    updateTag('protocols-nav');
 
     return {
       success: true,

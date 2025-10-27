@@ -73,7 +73,7 @@ async function getProtocolById(id: string) {
     },
     ['protocol', id],
     {
-      tags: [`protocol-${id}`, 'protocols'],
+      tags: [`protocol-${id}`],
     },
   )();
 }
