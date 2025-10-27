@@ -88,6 +88,7 @@ export async function deleteProtocol(id: string): Promise<SuccessMessage> {
   try {
     await db.delete(protocols).where(eq(protocols.id, id));
     updateTag('protocols');
+    updateTag(`protocol-${id}`);
     return {
       success: true,
       message: 'Protocol deleted successfully',
@@ -147,6 +148,7 @@ export async function updateProtocol(
       .where(eq(protocols.id, validatedProtocol.id));
 
     updateTag('protocols');
+    updateTag(`protocol-${validatedProtocol.id}`);
 
     return {
       success: true,

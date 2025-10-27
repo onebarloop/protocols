@@ -42,6 +42,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --container-8xl: 1920px;
+  --animate-fadeIn: fadeIn 0.4s ease-in forwards;
 }
 
 :root {
@@ -119,5 +120,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

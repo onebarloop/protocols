@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
   return (
-    <section className="max-w-a4 relative mx-auto w-full">
+    <section className="max-w-a4 animate-fadeIn relative mx-auto w-full opacity-0">
       <div className="mb-8">
         {/* Protocol title skeleton */}
         <Skeleton className="mb-2 h-10 w-3/4" />
