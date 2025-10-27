@@ -4,7 +4,7 @@ import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
 import EditorWrapper from '@/components/custom/editor-wrapper';
 
-export default async function Home() {
+export default function Home() {
   return (
     <DocumentProvider>
       <section className="max-w-a4 relative mx-auto w-full">
