@@ -49,17 +49,21 @@ export async function saveNewProtocol(
   }
 
   try {
-    await db.insert(protocols).values({
-      name,
-      serializedState: validatedProtocol.serializedState,
-      icon: validatedProtocol.icon,
-      authorId: session?.user?.id || null,
-    });
+    const [data] = await db
+      .insert(protocols)
+      .values({
+        name,
+        serializedState: validatedProtocol.serializedState,
+        icon: validatedProtocol.icon,
+        authorId: session?.user?.id || null,
+      })
+      .returning({ id: protocols.id });
     revalidatePath('/protocols');
     updateTag('protocols-nav');
     return {
       success: true,
       message: 'Protocol saved successfully',
+      protocolId: data.id,
     };
   } catch (error) {
     console.error('Error saving protocol:', error);
@@ -138,7 +142,7 @@ export async function updateProtocol(
   }
 
   try {
-    await db
+    const [data] = await db
       .update(protocols)
       .set({
         name: validatedProtocol.name,
@@ -147,7 +151,8 @@ export async function updateProtocol(
         editedAt: new Date(),
         editorId: session?.user?.id || null,
       })
-      .where(eq(protocols.id, validatedProtocol.id));
+      .where(eq(protocols.id, validatedProtocol.id))
+      .returning({ id: protocols.id });
 
     revalidatePath('/protocols');
     revalidatePath(`/protocols/${validatedProtocol.id}`);
@@ -156,6 +161,7 @@ export async function updateProtocol(
     return {
       success: true,
       message: 'Protocol updated successfully',
+      protocolId: data.id,
     };
   } catch (error) {
     console.error('Error updating protocol:', error);
