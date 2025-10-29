@@ -8,10 +8,6 @@ type ProtocolsContextType = {
   addProtocolOptimistic: (protocol: ProtocolNavItemsQueryResult) => void;
   updateProtocolOptimistic: (protocol: ProtocolNavItemsQueryResult) => void;
   deleteProtocolOptimistic: (id: string) => void;
-  replaceTempId: (
-    tempId: string,
-    protocol: ProtocolNavItemsQueryResult,
-  ) => void;
 };
 
 const ProtocolsContext = createContext<ProtocolsContextType | undefined>(
@@ -69,13 +65,6 @@ export function ProtocolsProvider({
     setOptimisticProtocols({ type: 'delete', id });
   };
 
-  const replaceTempId = (
-    tempId: string,
-    protocol: ProtocolNavItemsQueryResult,
-  ) => {
-    setOptimisticProtocols({ type: 'replaceTempId', tempId, protocol });
-  };
-
   return (
     <ProtocolsContext.Provider
       value={{
@@ -83,7 +72,6 @@ export function ProtocolsProvider({
         addProtocolOptimistic,
         updateProtocolOptimistic,
         deleteProtocolOptimistic,
-        replaceTempId,
       }}
     >
       {children}

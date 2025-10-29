@@ -7,11 +7,11 @@ import { toast } from 'sonner';
 import { useTransition } from 'react';
 import { isExistingProtocol } from '@/types/helpers';
 import { useProtocols } from '@/lib/context/protocols-context';
+import { createRandomName } from '@/lib/utils';
 
 export default function SaveDocumentButton() {
   const { protocolState } = useDocument();
-  const { addProtocolOptimistic, updateProtocolOptimistic, replaceTempId } =
-    useProtocols();
+  const { addProtocolOptimistic, updateProtocolOptimistic } = useProtocols();
   const [isPending, startTransition] = useTransition();
 
   const handleSave = () => {
@@ -28,22 +28,16 @@ export default function SaveDocumentButton() {
 
         result = await updateProtocol(protocolState);
       } else {
-        const tempId = `temp-${Date.now()}`;
-
+        const name =
+          protocolState.name === '' || protocolState.name === 'New Protocol'
+            ? createRandomName({ type: 'animals' })
+            : protocolState.name;
         addProtocolOptimistic({
-          id: tempId,
-          name: protocolState.name,
+          id: `temp-${Date.now()}`,
+          name: name,
           icon: protocolState.icon || '🧪',
         });
-        result = await addProtocol(protocolState);
-
-        if (result.success && result.protocolId) {
-          replaceTempId(tempId, {
-            id: result.protocolId,
-            name: protocolState.name,
-            icon: protocolState.icon || '🧪',
-          });
-        }
+        result = await addProtocol({ ...protocolState, name });
       }
 
       if (result.success) {

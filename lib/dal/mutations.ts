@@ -8,7 +8,6 @@ import { getSession } from '@/lib/auth/get-session';
 import { SuccessMessage } from '@/types/types';
 import { NewProtocol, Protocol } from '@/types/zod-schemas';
 import { ProtocolSchema, NewProtocolSchema } from '@/types/zod-schemas';
-import { createRandomName } from '../utils';
 
 export async function addProtocol(
   protocol: NewProtocol,
@@ -27,11 +26,6 @@ export async function addProtocol(
   }
 
   const validatedProtocol = validationResult.data;
-
-  const name =
-    validatedProtocol.name === '' || validatedProtocol.name === 'New Protocol'
-      ? createRandomName({ type: 'animals' })
-      : validatedProtocol.name;
 
   const session = await getSession();
   if (!session) {
@@ -52,7 +46,7 @@ export async function addProtocol(
     const [data] = await db
       .insert(protocols)
       .values({
-        name,
+        name: validatedProtocol.name,
         serializedState: validatedProtocol.serializedState,
         icon: validatedProtocol.icon,
         authorId: session?.user?.id || null,
