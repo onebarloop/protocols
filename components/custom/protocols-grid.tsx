@@ -27,6 +27,7 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
     <Link
       href={`/protocols/${protocol.id}`}
       key={protocol.id}
+      prefetch={true}
       className="hover:border-accent-foreground/40 group flex flex-col overflow-hidden rounded-lg border shadow transition-all"
     >
       <h2 className="bg-card/60 group-hover:bg-card flex flex-wrap gap-2 border-b px-4 py-3 transition-colors">

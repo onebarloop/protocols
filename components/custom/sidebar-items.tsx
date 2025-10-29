@@ -29,7 +29,7 @@ export function SidebarItem({
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
-        <Link href={href}>
+        <Link href={href} prefetch={true}>
           {icon}
           <span>{name}</span>
         </Link>
@@ -64,7 +64,11 @@ export function SidebarSubItem({
         isActive={id === protocol.id}
         className="h-auto min-h-fit"
       >
-        <Link className="p-1" href={`/protocols/${protocol.id}`}>
+        <Link
+          className="p-1"
+          href={`/protocols/${protocol.id}`}
+          prefetch={true}
+        >
           <span className="mr-1">{protocol.icon}</span>
           <span className="line-clamp-2">{protocol.name}</span>
           <Button
