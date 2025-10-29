@@ -6,11 +6,9 @@ import { addProtocol, updateProtocol } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
 import { isExistingProtocol } from '@/types/helpers';
-import { useRouter } from 'next/navigation';
 import { useProtocols } from '@/lib/context/protocols-context';
 
 export default function SaveDocumentButton() {
-  const router = useRouter();
   const { protocolState } = useDocument();
   const { addProtocolOptimistic, updateProtocolOptimistic } = useProtocols();
   const [isPending, startTransition] = useTransition();
