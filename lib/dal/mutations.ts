@@ -10,7 +10,7 @@ import { NewProtocol, Protocol } from '@/types/zod-schemas';
 import { ProtocolSchema, NewProtocolSchema } from '@/types/zod-schemas';
 import { createRandomName } from '../utils';
 
-export async function saveNewProtocol(
+export async function addProtocol(
   protocol: NewProtocol,
 ): Promise<SuccessMessage> {
   const validationResult = NewProtocolSchema.safeParse(protocol);

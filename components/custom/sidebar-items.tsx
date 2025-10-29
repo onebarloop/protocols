@@ -8,12 +8,12 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { useParams, useRouter } from 'next/navigation';
-import { ReactNode, useOptimistic, useTransition } from 'react';
+import { ReactNode, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
-import { deleteProtocol } from '@/lib/dal/mutations';
+import { deleteProtocol as deleteProtocolMutation } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
-import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
+import { useProtocols } from '@/lib/context/protocols-context';
 
 export function SidebarItem({
   name,
@@ -39,24 +39,13 @@ export function SidebarItem({
   );
 }
 
-export function SidebarProtocolsList({
-  initialProtocols,
-}: {
-  initialProtocols: ProtocolNavItemsQueryResult[];
-}) {
-  const [optimisticProtocols, setOptimisticProtocols] = useOptimistic(
-    initialProtocols,
-    (state, deletedId: string) => state.filter((p) => p.id !== deletedId),
-  );
+export function SidebarProtocolsList() {
+  const { protocols } = useProtocols();
 
   return (
     <>
-      {optimisticProtocols.map((protocol) => (
-        <SidebarProtocolItem
-          key={protocol.id}
-          protocol={protocol}
-          onDelete={setOptimisticProtocols}
-        />
+      {protocols.map((protocol) => (
+        <SidebarProtocolItem key={protocol.id} protocol={protocol} />
       ))}
     </>
   );
@@ -64,13 +53,12 @@ export function SidebarProtocolsList({
 
 function SidebarProtocolItem({
   protocol,
-  onDelete,
 }: {
-  protocol: ProtocolNavItemsQueryResult;
-  onDelete: (id: string) => void;
+  protocol: { id: string; name: string; icon: string };
 }) {
   const { id } = useParams();
   const router = useRouter();
+  const { deleteProtocolOptimistic } = useProtocols();
   const [, startTransition] = useTransition();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -78,9 +66,9 @@ function SidebarProtocolItem({
     e.stopPropagation();
 
     startTransition(async () => {
-      onDelete(protocol.id);
+      deleteProtocolOptimistic(protocol.id);
 
-      const result = await deleteProtocol(protocol.id);
+      const result = await deleteProtocolMutation(protocol.id);
 
       if (result.success) {
         toast.success(result.message);

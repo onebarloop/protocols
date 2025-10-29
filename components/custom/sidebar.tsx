@@ -15,13 +15,9 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar';
 
-import { getProtocolNavItems } from '@/lib/dal/queries';
-
 import { SidebarItem, SidebarProtocolsList } from './sidebar-items';
 
 export async function AppSidebar() {
-  const protocols = await getProtocolNavItems();
-
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -41,7 +37,7 @@ export async function AppSidebar() {
               <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
               <SidebarItem name="Protocols" href="/protocols" icon={<Inbox />}>
                 <SidebarMenuSub className="mr-0 pr-0">
-                  <SidebarProtocolsList initialProtocols={protocols} />
+                  <SidebarProtocolsList />
                 </SidebarMenuSub>
               </SidebarItem>
             </SidebarMenu>
