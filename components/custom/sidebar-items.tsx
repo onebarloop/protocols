@@ -7,8 +7,8 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { useParams } from 'next/navigation';
-import { ReactNode } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { ReactNode, useOptimistic, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
 import { deleteProtocol } from '@/lib/dal/mutations';
@@ -39,24 +39,59 @@ export function SidebarItem({
   );
 }
 
-export function SidebarSubItem({
+export function SidebarProtocolsList({
+  initialProtocols,
+}: {
+  initialProtocols: ProtocolNavItemsQueryResult[];
+}) {
+  const [optimisticProtocols, setOptimisticProtocols] = useOptimistic(
+    initialProtocols,
+    (state, deletedId: string) => state.filter((p) => p.id !== deletedId),
+  );
+
+  return (
+    <>
+      {optimisticProtocols.map((protocol) => (
+        <SidebarProtocolItem
+          key={protocol.id}
+          protocol={protocol}
+          onDelete={setOptimisticProtocols}
+        />
+      ))}
+    </>
+  );
+}
+
+function SidebarProtocolItem({
   protocol,
+  onDelete,
 }: {
   protocol: ProtocolNavItemsQueryResult;
+  onDelete: (id: string) => void;
 }) {
   const { id } = useParams();
+  const router = useRouter();
+  const [, startTransition] = useTransition();
 
-  const handleClick = async (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const result = await deleteProtocol(protocol.id);
-    if (result.success) {
-      toast.success(result.message);
-    } else {
-      toast.error(result.message);
-    }
-  };
 
+    startTransition(async () => {
+      onDelete(protocol.id);
+
+      const result = await deleteProtocol(protocol.id);
+
+      if (result.success) {
+        toast.success(result.message);
+        if (id === protocol.id) {
+          router.push('/protocols');
+        }
+      } else {
+        toast.error(result.message);
+      }
+    });
+  };
   return (
     <SidebarMenuSubItem key={protocol.id}>
       <SidebarMenuSubButton

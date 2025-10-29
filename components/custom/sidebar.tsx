@@ -17,7 +17,7 @@ import {
 
 import { getProtocolNavItems } from '@/lib/dal/queries';
 
-import { SidebarItem, SidebarSubItem } from './sidebar-items';
+import { SidebarItem, SidebarProtocolsList } from './sidebar-items';
 
 export async function AppSidebar() {
   const protocols = await getProtocolNavItems();
@@ -41,9 +41,7 @@ export async function AppSidebar() {
               <SidebarItem name="New Document" href="/" icon={<FilePlus />} />
               <SidebarItem name="Protocols" href="/protocols" icon={<Inbox />}>
                 <SidebarMenuSub className="mr-0 pr-0">
-                  {protocols.map((protocol) => (
-                    <SidebarSubItem key={protocol.id} protocol={protocol} />
-                  ))}
+                  <SidebarProtocolsList initialProtocols={protocols} />
                 </SidebarMenuSub>
               </SidebarItem>
             </SidebarMenu>
