@@ -10,7 +10,8 @@ import { useProtocols } from '@/lib/context/protocols-context';
 
 export default function SaveDocumentButton() {
   const { protocolState } = useDocument();
-  const { addProtocolOptimistic, updateProtocolOptimistic } = useProtocols();
+  const { addProtocolOptimistic, updateProtocolOptimistic, replaceTempId } =
+    useProtocols();
   const [isPending, startTransition] = useTransition();
 
   const handleSave = () => {
@@ -27,10 +28,17 @@ export default function SaveDocumentButton() {
 
         result = await updateProtocol(protocolState);
       } else {
+        const tempId = `temp-${Date.now()}`;
+
+        addProtocolOptimistic({
+          id: tempId,
+          name: protocolState.name,
+          icon: protocolState.icon || '🧪',
+        });
         result = await addProtocol(protocolState);
 
         if (result.success && result.protocolId) {
-          addProtocolOptimistic({
+          replaceTempId(tempId, {
             id: result.protocolId,
             name: protocolState.name,
             icon: protocolState.icon || '🧪',
