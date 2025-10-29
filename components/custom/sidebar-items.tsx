@@ -11,7 +11,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
-import { deleteProtocol as deleteProtocolMutation } from '@/lib/dal/mutations';
+import { deleteProtocol } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
 import { useProtocols } from '@/lib/context/protocols-context';
 
@@ -68,7 +68,7 @@ function SidebarProtocolItem({
     startTransition(async () => {
       deleteProtocolOptimistic(protocol.id);
 
-      const result = await deleteProtocolMutation(protocol.id);
+      const result = await deleteProtocol(protocol.id);
 
       if (result.success) {
         toast.success(result.message);
