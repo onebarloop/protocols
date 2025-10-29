@@ -9,11 +9,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 30s
       timeout: 10s
       retries: 5
@@ -24,16 +24,25 @@ services:
     build: .
     container_name: protocols_app
     ports:
-      - "3000:3000"
+      - '80:3000'
     environment:
       NODE_ENV: production
       PORT: 3000
-      HOSTNAME: "0.0.0.0"
+      HOSTNAME: '0.0.0.0'
       DATABASE_URL: postgresql://postgres:password@postgres:5432/protocols
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme}
     depends_on:
       postgres:
         condition: service_healthy
-    command: ["sh", "-c", "npx drizzle-kit push && npm run build && npm start"]
+    command:
+      [
+        'sh',
+        '-c',
+        'npm run db:migrate && npm run init:users && npm run build && npm start',
+      ]
     networks:
       - app-network
 
