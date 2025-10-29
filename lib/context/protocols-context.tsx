@@ -1,16 +1,10 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  ReactNode,
-  useOptimistic,
-  useTransition,
-} from 'react';
+import { createContext, useContext, ReactNode, useOptimistic } from 'react';
 import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 
 type ProtocolsContextType = {
-  protocols: ProtocolNavItemsQueryResult[];
+  optimisticProtocols: ProtocolNavItemsQueryResult[];
   addProtocolOptimistic: (protocol: ProtocolNavItemsQueryResult) => void;
   updateProtocolOptimistic: (protocol: ProtocolNavItemsQueryResult) => void;
   deleteProtocolOptimistic: (id: string) => void;
@@ -18,7 +12,6 @@ type ProtocolsContextType = {
     tempId: string,
     protocol: ProtocolNavItemsQueryResult,
   ) => void;
-  isPending: boolean;
 };
 
 const ProtocolsContext = createContext<ProtocolsContextType | undefined>(
@@ -42,7 +35,6 @@ export function ProtocolsProvider({
   children: ReactNode;
   initialProtocols: ProtocolNavItemsQueryResult[];
 }) {
-  const [isPending, startTransition] = useTransition();
   const [optimisticProtocols, setOptimisticProtocols] = useOptimistic(
     initialProtocols,
     (state, action: ProtocolAction) => {
@@ -66,41 +58,32 @@ export function ProtocolsProvider({
   );
 
   const addProtocolOptimistic = (protocol: ProtocolNavItemsQueryResult) => {
-    startTransition(() => {
-      setOptimisticProtocols({ type: 'add', protocol });
-    });
+    setOptimisticProtocols({ type: 'add', protocol });
   };
 
   const updateProtocolOptimistic = (protocol: ProtocolNavItemsQueryResult) => {
-    startTransition(() => {
-      setOptimisticProtocols({ type: 'update', protocol });
-    });
+    setOptimisticProtocols({ type: 'update', protocol });
   };
 
   const deleteProtocolOptimistic = (id: string) => {
-    startTransition(() => {
-      setOptimisticProtocols({ type: 'delete', id });
-    });
+    setOptimisticProtocols({ type: 'delete', id });
   };
 
   const replaceTempId = (
     tempId: string,
     protocol: ProtocolNavItemsQueryResult,
   ) => {
-    startTransition(() => {
-      setOptimisticProtocols({ type: 'replaceTempId', tempId, protocol });
-    });
+    setOptimisticProtocols({ type: 'replaceTempId', tempId, protocol });
   };
 
   return (
     <ProtocolsContext.Provider
       value={{
-        protocols: optimisticProtocols,
+        optimisticProtocols,
         addProtocolOptimistic,
         updateProtocolOptimistic,
         deleteProtocolOptimistic,
         replaceTempId,
-        isPending,
       }}
     >
       {children}

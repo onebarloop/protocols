@@ -3,8 +3,9 @@
 import { AllProtocolsQueryResult } from '@/lib/dal/queries';
 import Editor from '@/components/editor/editor';
 import Link from 'next/link';
-import { use } from 'react';
+import { use, useMemo } from 'react';
 import ClientDate from './client-date';
+import { useProtocols } from '@/lib/context/protocols-context';
 
 export default function ProtocolsGrid({
   protocols,
@@ -12,10 +13,16 @@ export default function ProtocolsGrid({
   protocols: Promise<AllProtocolsQueryResult[]>;
 }) {
   const allProtocols = use(protocols);
+  const { optimisticProtocols } = useProtocols();
+
+  const visibleProtocols = useMemo(() => {
+    const contextIds = new Set(optimisticProtocols.map((p) => p.id));
+    return allProtocols.filter((p) => contextIds.has(p.id));
+  }, [allProtocols, optimisticProtocols]);
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]">
-      {allProtocols.map((protocol) => (
+      {visibleProtocols.map((protocol) => (
         <ProtocolCard key={protocol.id} protocol={protocol} />
       ))}
     </div>

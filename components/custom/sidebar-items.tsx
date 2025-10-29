@@ -40,11 +40,11 @@ export function SidebarItem({
 }
 
 export function SidebarProtocolsList() {
-  const { protocols } = useProtocols();
+  const { optimisticProtocols } = useProtocols();
 
   return (
     <>
-      {protocols.map((protocol) => (
+      {optimisticProtocols.map((protocol) => (
         <SidebarProtocolItem key={protocol.id} protocol={protocol} />
       ))}
     </>
@@ -59,7 +59,7 @@ function SidebarProtocolItem({
   const { id } = useParams();
   const router = useRouter();
   const { deleteProtocolOptimistic } = useProtocols();
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
