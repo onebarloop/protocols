@@ -12,7 +12,7 @@ import { createRandomName } from '@/lib/utils';
 export default function SaveDocumentButton() {
   const { protocolState } = useDocument();
   const { addProtocolOptimistic, updateProtocolOptimistic } = useProtocols();
-  const [isPending, startTransition] = useTransition();
+  const [_isPending, startTransition] = useTransition();
 
   const handleSave = () => {
     startTransition(async () => {

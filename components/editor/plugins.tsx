@@ -18,7 +18,7 @@ import { FormatCheckList } from '@/components/editor/plugins/toolbar/block-forma
 import { FormatQuote } from '@/components/editor/plugins/toolbar/block-format/format-quote';
 
 export function Plugins({ editable = true }: { editable?: boolean }) {
-  const [floatingAnchorElem, setFloatingAnchorElem] =
+  const [_floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
