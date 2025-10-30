@@ -4,7 +4,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useActionState, useState, useEffect, use } from 'react';
+import { useActionState, useState, useEffect } from 'react';
 import { login } from '@/lib/auth/server-actions';
 import { toast } from 'sonner';
 

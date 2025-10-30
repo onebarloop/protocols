@@ -13,7 +13,8 @@ function cn(...inputs: ClassValue[]) {
 }
 
 function convertDate(date: Date): string {
-  return new Date(date).toLocaleTimeString([], {
+  return new Date(date).toLocaleTimeString('de-DE', {
+    timeZone: 'Europe/Berlin',
     minute: '2-digit',
     hour: '2-digit',
     day: '2-digit',

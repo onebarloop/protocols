@@ -4,7 +4,7 @@ import { AllProtocolsQueryResult } from '@/lib/dal/queries';
 import Editor from '@/components/editor/editor';
 import Link from 'next/link';
 import { use, useMemo } from 'react';
-import ClientDate from './client-date';
+import { convertDate } from '@/lib/utils';
 import { useProtocols } from '@/lib/context/protocols-context';
 
 export default function ProtocolsGrid({
@@ -48,7 +48,7 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
       />
       <div className="flex flex-wrap justify-between gap-x-4 border-t px-4 py-2">
         <p className="text-muted-foreground text-xs">
-          <ClientDate date={protocol.createdAt} />
+          {convertDate(protocol.createdAt)}
         </p>
         <p className="text-muted-foreground text-xs">
           by {protocol.author?.name || 'deleted user'}

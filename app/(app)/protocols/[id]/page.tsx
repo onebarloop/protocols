@@ -10,7 +10,7 @@ import ControlPanel from '@/components/custom/control-panel';
 import { getSession } from '@/lib/auth/get-session';
 import { redirect } from 'next/navigation';
 import EditorWrapper from '@/components/custom/editor-wrapper';
-import ClientDate from '@/components/custom/client-date';
+import { convertDate } from '@/lib/utils';
 
 export default async function ProtocolPage({
   params,
@@ -41,7 +41,7 @@ export default async function ProtocolPage({
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
           <p className="text-foreground/50 text-sm">
-            <ClientDate date={protocol.createdAt} />
+            {convertDate(protocol.createdAt)}
             <br />© by{' '}
             {protocol.author?.name ? protocol.author.name : 'anonymous'}
             {protocol.editor?.name
