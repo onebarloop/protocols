@@ -28,7 +28,7 @@ export async function AppSidebar() {
           ❤️
         </div>
       </SidebarHeader>
-      <SidebarSeparator className="!w-auto" />
+      <SidebarSeparator className="w-auto!" />
       <SidebarContent>
         <SidebarGroup>
           {/*     <SidebarGroupLabel>***</SidebarGroupLabel> */}

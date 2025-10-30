@@ -14,6 +14,7 @@ import { Trash } from 'lucide-react';
 import { deleteProtocol } from '@/lib/dal/mutations';
 import { toast } from 'sonner';
 import { useProtocols } from '@/lib/context/protocols-context';
+import { useSession } from '@/lib/context/session-context';
 
 export function SidebarItem({
   name,
@@ -58,6 +59,7 @@ function SidebarProtocolItem({
 }) {
   const { id } = useParams();
   const router = useRouter();
+  const { user } = useSession();
   const { deleteProtocolOptimistic } = useProtocols();
   const [isPending, startTransition] = useTransition();
 
@@ -95,6 +97,7 @@ function SidebarProtocolItem({
           <span className="mr-1">{protocol.icon}</span>
           <span className="line-clamp-2">{protocol.name}</span>
           <Button
+            disabled={user.role === 'guest' || isPending}
             size="icon"
             variant="ghost"
             className="ml-auto h-6 w-6 p-0"

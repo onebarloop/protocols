@@ -13,3 +13,5 @@ export const getSession = cache(async () => {
 
   return session;
 });
+
+export type Session = Awaited<ReturnType<typeof getSession>>;

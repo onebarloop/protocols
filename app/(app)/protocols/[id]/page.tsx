@@ -9,11 +9,6 @@ import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
 import { getSession } from '@/lib/auth/get-session';
 import { redirect } from 'next/navigation';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import EditorWrapper from '@/components/custom/editor-wrapper';
 import ClientDate from '@/components/custom/client-date';
 
@@ -69,20 +64,6 @@ export default async function ProtocolPage({
               </Link>
             </Button>
           </>
-        ) : isGuest ? (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span tabIndex={0}>
-                <Button variant="outline" disabled>
-                  <Pencil />
-                  Edit protocol
-                </Button>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Edit disabled as guest</p>
-            </TooltipContent>
-          </Tooltip>
         ) : (
           <Button variant="outline" asChild>
             <Link href={`/protocols/${id}?edit=true`}>
