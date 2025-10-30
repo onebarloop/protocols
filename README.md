@@ -4,14 +4,13 @@ A modern Next.js web application for creating, editing, and managing collaborati
 
 ## Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) with Turbopack
+- **Framework:** [Next.js 16](https://nextjs.org/)
 - **UI:** [React 19](https://react.dev/) + [Tailwind CSS 4](https://tailwindcss.com/)
+- **UI Components:** [Radix UI](https://www.radix-ui.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **Editor:** [Lexical](https://lexical.dev/) with [shadcn-editor](https://github.com/htmujahid/shadcn-editor)
 - **Database:** [Supabase](https://supabase.com/) with [Drizzle ORM](https://orm.drizzle.team/)
 - **Auth:** [Better Auth](https://www.better-auth.com/)
-- **UI Components:** [Radix UI](https://www.radix-ui.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **PDF Export:** [React-pdf](https://react-pdf.org/) (not implemented yet)
-- **Icons:** [Lucide React](https://lucide.dev/)
 
 ## Prerequisites
 
