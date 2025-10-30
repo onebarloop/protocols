@@ -8,17 +8,17 @@ import { convertDate } from '@/utils';
 import { useProtocols } from '@/contexts/protocols-context';
 
 export default function ProtocolsGrid({
-  protocols,
+  protocolsPromise,
 }: {
-  protocols: Promise<AllProtocolsQueryResult[]>;
+  protocolsPromise: Promise<AllProtocolsQueryResult[]>;
 }) {
-  const allProtocols = use(protocols);
+  const protocols = use(protocolsPromise);
   const { optimisticProtocols } = useProtocols();
 
   const visibleProtocols = useMemo(() => {
     const contextIds = new Set(optimisticProtocols.map((p) => p.id));
-    return allProtocols.filter((p) => contextIds.has(p.id));
-  }, [allProtocols, optimisticProtocols]);
+    return protocols.filter((p) => contextIds.has(p.id));
+  }, [protocols, optimisticProtocols]);
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]">

@@ -4,13 +4,13 @@ import { Suspense } from 'react';
 import GridSkeleton from '@/app/(app)/protocols/grid-skeleton';
 
 export default async function ProtocolsPage() {
-  const protocols = getAllProtocols();
+  const protocolsPromise = getAllProtocols();
 
   return (
     <section className="max-w-8xl mx-auto">
       <h1 className="mb-6 text-2xl">Protocols Overview</h1>
       <Suspense fallback={<GridSkeleton />}>
-        <ProtocolsGrid protocols={protocols} />
+        <ProtocolsGrid protocolsPromise={protocolsPromise} />
       </Suspense>
     </section>
   );
