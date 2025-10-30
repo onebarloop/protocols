@@ -2,13 +2,13 @@ import type { BetterAuthClientPlugin, BetterAuthPlugin } from 'better-auth';
 
 const rolePlugin = () => {
   return {
-    id: 'my-plugin',
+    id: 'role-plugin',
     schema: {
       user: {
         fields: {
           role: {
             type: ['admin', 'editor', 'guest'],
-            required: false,
+            required: true,
           },
         },
       },
@@ -18,7 +18,7 @@ const rolePlugin = () => {
 
 const rolePluginClient = () => {
   return {
-    id: 'my-plugin-client',
+    id: 'role-plugin-client',
     $InferServerPlugin: {} as ReturnType<typeof rolePlugin>,
   } satisfies BetterAuthClientPlugin;
 };
