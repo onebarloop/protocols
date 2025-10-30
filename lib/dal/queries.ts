@@ -1,6 +1,6 @@
 import { db } from '@/db/index';
 import { unstable_cache } from 'next/cache';
-import { getSession } from '../auth/get-session';
+import { getSession } from '@/auth/get-session';
 import z from 'zod';
 
 async function getProtocolNavItems() {

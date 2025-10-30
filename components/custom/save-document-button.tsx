@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useDocument } from '@/lib/context/document-context';
-import { addProtocol, updateProtocol } from '@/lib/dal/mutations';
+import { useDocument } from '@/contexts/document-context';
+import { addProtocol, updateProtocol } from '@/dal/mutations';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
 import { isExistingProtocol } from '@/types/helpers';
-import { useProtocols } from '@/lib/context/protocols-context';
-import { createRandomName } from '@/lib/utils';
+import { useProtocols } from '@/contexts/protocols-context';
+import { createRandomName } from '@/utils';
 
 export default function SaveDocumentButton() {
   const { protocolState } = useDocument();

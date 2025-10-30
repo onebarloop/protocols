@@ -11,10 +11,10 @@ import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
-import { deleteProtocol } from '@/lib/dal/mutations';
+import { deleteProtocol } from '@/dal/mutations';
 import { toast } from 'sonner';
-import { useProtocols } from '@/lib/context/protocols-context';
-import { useSession } from '@/lib/context/session-context';
+import { useProtocols } from '@/contexts/protocols-context';
+import { useSession } from '@/contexts/session-context';
 
 export function SidebarItem({
   name,

@@ -1,6 +1,6 @@
 'use client';
 import Editor from '../editor/editor';
-import { useDocument } from '@/lib/context/document-context';
+import { useDocument } from '@/contexts/document-context';
 import { SerializedEditorState, EditorState } from 'lexical';
 
 type EditorWrapperProps = {

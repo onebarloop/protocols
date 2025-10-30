@@ -4,7 +4,7 @@ import { updateTag, revalidatePath } from 'next/cache';
 import { db } from '@/db/index';
 import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
-import { getSession } from '@/lib/auth/get-session';
+import { getSession } from '@/auth/get-session';
 import { SuccessMessage } from '@/types/types';
 import { NewProtocol, Protocol } from '@/types/zod-schemas';
 import { ProtocolSchema, NewProtocolSchema } from '@/types/zod-schemas';

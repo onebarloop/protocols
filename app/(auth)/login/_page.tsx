@@ -5,7 +5,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useActionState, useState, useEffect } from 'react';
-import { login } from '@/lib/auth/server-actions';
+import { login } from '@/auth/server-actions';
 import { toast } from 'sonner';
 
 export default function SignInPage() {

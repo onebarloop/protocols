@@ -1,11 +1,11 @@
 'use client';
 
-import { AllProtocolsQueryResult } from '@/lib/dal/queries';
+import { AllProtocolsQueryResult } from '@/dal/queries';
 import Editor from '@/components/editor/editor';
 import Link from 'next/link';
 import { use, useMemo } from 'react';
-import { convertDate } from '@/lib/utils';
-import { useProtocols } from '@/lib/context/protocols-context';
+import { convertDate } from '@/utils';
+import { useProtocols } from '@/contexts/protocols-context';
 
 export default function ProtocolsGrid({
   protocols,

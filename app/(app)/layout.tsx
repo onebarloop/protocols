@@ -2,11 +2,11 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/custom/sidebar';
 import SidebarTrigger from '@/components/custom/sidebar-trigger';
 import { cookies } from 'next/headers';
-import { getSession } from '@/lib/auth/get-session';
+import { getSession } from '@/auth/get-session';
 import { redirect } from 'next/navigation';
-import { ProtocolsProvider } from '@/lib/context/protocols-context';
-import { getProtocolNavItems } from '@/lib/dal/queries';
-import { SessionProvider } from '@/lib/context/session-context';
+import { ProtocolsProvider } from '@/contexts/protocols-context';
+import { getProtocolNavItems } from '@/dal/queries';
+import { SessionProvider } from '@/contexts/session-context';
 
 export default async function AppLayout({
   children,

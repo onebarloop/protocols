@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from '@/lib/context/session-context';
+import { useSession } from '@/contexts/session-context';
 
 export default function ControlPanel({
   children,

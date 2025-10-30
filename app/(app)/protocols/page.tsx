@@ -1,4 +1,4 @@
-import { getAllProtocols } from '@/lib/dal/queries';
+import { getAllProtocols } from '@/dal/queries';
 import ProtocolsGrid from '@/components/custom/protocols-grid';
 import { Suspense } from 'react';
 import GridSkeleton from '@/app/(app)/protocols/grid-skeleton';

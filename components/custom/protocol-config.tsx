@@ -3,7 +3,7 @@
 import { ChangeEvent, useState, useRef, useEffect } from 'react';
 import { Pencil, Check } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useDocument } from '@/lib/context/document-context';
+import { useDocument } from '@/contexts/document-context';
 import {
   Select,
   SelectContent,

@@ -19,7 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/auth/*": ["./lib/auth/*"],
+      "@/hooks/*": ["./lib/hooks/*"],
+      "@/dal/*": ["./lib/dal/*"],
+      "@/contexts/*": ["./lib/contexts/*"],
+      "@/utils": ["./lib/utils.ts"]
     }
   },
   "include": [

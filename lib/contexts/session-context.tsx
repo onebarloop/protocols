@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import type { Session } from '@/lib/auth/get-session';
+import type { Session } from '@/auth/get-session';
 
 type SessionContextType = NonNullable<Session>;
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, ReactNode, useOptimistic } from 'react';
-import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
+import { ProtocolNavItemsQueryResult } from '@/dal/queries';
 
 type ProtocolsContextType = {
   optimisticProtocols: ProtocolNavItemsQueryResult[];

@@ -1,4 +1,4 @@
-import { DocumentProvider } from '@/lib/context/document-context';
+import { DocumentProvider } from '@/contexts/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';

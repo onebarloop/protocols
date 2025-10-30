@@ -1,16 +1,16 @@
-import { getProtocolById } from '@/lib/dal/queries';
+import { getProtocolById } from '@/dal/queries';
 import { notFound } from 'next/navigation';
-import { DocumentProvider } from '@/lib/context/document-context';
+import { DocumentProvider } from '@/contexts/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import Link from 'next/link';
 import { Pencil, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
-import { getSession } from '@/lib/auth/get-session';
+import { getSession } from '@/auth/get-session';
 import { redirect } from 'next/navigation';
 import EditorWrapper from '@/components/custom/editor-wrapper';
-import { convertDate } from '@/lib/utils';
+import { convertDate } from '@/utils';
 
 export default async function ProtocolPage({
   params,
