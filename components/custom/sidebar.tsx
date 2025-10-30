@@ -17,16 +17,16 @@ import {
 
 import { SidebarItem, SidebarProtocolsList } from './sidebar-items';
 
+import UserMenu from './user-menu';
+
 export async function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
+      <SidebarHeader className="flex flex-row items-center justify-between gap-2">
         <span className="upper font-thin group-data-[collapsible=icon]:hidden">
           Protocols
         </span>
-        <div className="hidden justify-center group-data-[collapsible=icon]:flex">
-          ❤️
-        </div>
+        <UserMenu />
       </SidebarHeader>
       <SidebarSeparator className="w-auto!" />
       <SidebarContent>
