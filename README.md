@@ -1,6 +1,7 @@
 # Protocols
 
 A modern Next.js web application for creating, editing, and managing collaborative text documents with a rich-text editor.
+My main focus is to provide a smooth and fast user experience, leveraging the the capabilities of React compiler, SSR and intelligent caching.
 
 ## Tech Stack
 
