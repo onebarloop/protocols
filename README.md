@@ -9,6 +9,7 @@ A modern Next.js web application for creating, editing, and managing collaborati
 - **UI Components:** [Radix UI](https://www.radix-ui.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **Editor:** [Lexical](https://lexical.dev/) with [shadcn-editor](https://github.com/htmujahid/shadcn-editor)
 - **Database:** [Supabase](https://supabase.com/) with [Drizzle ORM](https://orm.drizzle.team/)
+- **Schema validation:** [Zod 4](https://zod.dev/)
 - **Auth:** [Better Auth](https://www.better-auth.com/)
 - **PDF Export:** [React-pdf](https://react-pdf.org/) (not implemented yet)
 

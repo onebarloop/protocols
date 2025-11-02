@@ -2,7 +2,7 @@ import 'server-only';
 
 import { db } from '@/db/index';
 import { unstable_cache } from 'next/cache';
-import z from 'zod';
+import { z } from 'zod';
 
 async function getProtocolNavItems() {
   return await unstable_cache(
