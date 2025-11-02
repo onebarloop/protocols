@@ -1,14 +1,10 @@
+import 'server-only';
+
 import { db } from '@/db/index';
 import { unstable_cache } from 'next/cache';
-import { getSession } from '@/auth/get-session';
 import z from 'zod';
 
 async function getProtocolNavItems() {
-  const session = await getSession();
-  if (!session) {
-    return [];
-  }
-
   return await unstable_cache(
     () => {
       return db.query.protocols.findMany({
@@ -28,11 +24,6 @@ async function getProtocolNavItems() {
 }
 
 async function getAllProtocols() {
-  const session = await getSession();
-  if (!session) {
-    return [];
-  }
-
   return await unstable_cache(
     () => {
       return db.query.protocols.findMany({
@@ -51,11 +42,6 @@ async function getAllProtocols() {
 }
 
 async function getProtocolById(id: string) {
-  const session = await getSession();
-  if (!session) {
-    return null;
-  }
-
   const validation = z.uuid().safeParse(id);
   if (!validation.success) {
     return null;
