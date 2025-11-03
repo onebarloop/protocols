@@ -17,9 +17,15 @@ import { useRouter } from 'next/navigation';
 export default function UserMenu() {
   const { user } = useSession();
   const router = useRouter();
+
   async function logout() {
-    await authClient.signOut();
-    router.refresh();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push('/login');
+        },
+      },
+    });
   }
 
   return (
