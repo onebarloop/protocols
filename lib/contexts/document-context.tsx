@@ -23,7 +23,7 @@ type DocumentContextType = {
 
 const initialState: NewProtocol = {
   name: 'New Protocol',
-  icon: '🧪',
+  icon: 'bird',
   serializedState: {
     root: {
       children: [

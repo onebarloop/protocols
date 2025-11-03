@@ -15,6 +15,8 @@ import { deleteProtocol } from '@/dal/mutations';
 import { toast } from 'sonner';
 import { useProtocols } from '@/contexts/protocols-context';
 import { useSession } from '@/contexts/session-context';
+import { Icon } from './icons';
+import type { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 
 export function SidebarItem({
   name,
@@ -55,7 +57,7 @@ export function SidebarProtocolsList() {
 function SidebarProtocolItem({
   protocol,
 }: {
-  protocol: { id: string; name: string; icon: string };
+  protocol: ProtocolNavItemsQueryResult;
 }) {
   const { id } = useParams();
   const router = useRouter();
@@ -94,7 +96,7 @@ function SidebarProtocolItem({
           href={`/protocols/${protocol.id}`}
           prefetch={true}
         >
-          <span className="mr-1">{protocol.icon}</span>
+          <Icon component={protocol.icon} />
           <span className="line-clamp-2">{protocol.name}</span>
           <Button
             disabled={user.role === 'guest' || isPending}

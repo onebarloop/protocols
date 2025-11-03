@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import type { SerializedEditorState } from 'lexical';
 
-export { ProtocolSchema, NewProtocolSchema, LoginSchema };
-export type { Protocol, NewProtocol, Login };
+export { ProtocolSchema, NewProtocolSchema, LoginSchema, ICONLIST, IconSchema };
+export type { Protocol, NewProtocol, Login, Icon };
 
 const SerializedEditorStateSchema: z.ZodType<SerializedEditorState> = z.object({
   root: z.object({
@@ -17,6 +17,19 @@ const SerializedEditorStateSchema: z.ZodType<SerializedEditorState> = z.object({
   }),
 }) as z.ZodType<SerializedEditorState>;
 
+const ICONLIST = [
+  'bird',
+  'fish',
+  'bug',
+  'squirrel',
+  'turtle',
+  'snail',
+] as const;
+
+const IconSchema = z.enum(ICONLIST);
+
+type Icon = z.infer<typeof IconSchema>;
+
 const ProtocolSchema = z.object({
   id: z.uuid(),
   name: z.string().nonempty('Name is required'),
@@ -25,7 +38,7 @@ const ProtocolSchema = z.object({
   editedAt: z.union([z.date(), z.string()]).nullable(),
   authorId: z.string().nullable(),
   editorId: z.string().nullable(),
-  icon: z.string(),
+  icon: IconSchema,
 });
 
 type Protocol = z.infer<typeof ProtocolSchema>;
@@ -33,7 +46,7 @@ type Protocol = z.infer<typeof ProtocolSchema>;
 const NewProtocolSchema = z.object({
   name: z.string(),
   serializedState: SerializedEditorStateSchema,
-  icon: z.string().optional(),
+  icon: IconSchema.optional(),
 });
 
 type NewProtocol = z.infer<typeof NewProtocolSchema>;

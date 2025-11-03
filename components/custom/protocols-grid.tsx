@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { use, useMemo } from 'react';
 import { convertDate } from '@/utils';
 import { useProtocols } from '@/contexts/protocols-context';
+import { Icon } from './icons';
 
 export default function ProtocolsGrid({
   protocolsPromise,
@@ -37,8 +38,9 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
       prefetch={true}
       className="hover:border-accent-foreground/40 group flex flex-col overflow-hidden rounded-lg border shadow transition-all"
     >
-      <h2 className="bg-card/60 group-hover:bg-card flex flex-wrap gap-2 border-b px-4 py-3 transition-colors">
-        {protocol.icon} {protocol.name}
+      <h2 className="bg-card/60 group-hover:bg-card flex flex-wrap items-center gap-2 border-b px-4 py-3 transition-colors">
+        <Icon component={protocol.icon} className="h-5 w-5" />
+        <span>{protocol.name}</span>
       </h2>
 
       <Editor

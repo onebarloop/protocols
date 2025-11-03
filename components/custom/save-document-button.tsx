@@ -35,7 +35,7 @@ export default function SaveDocumentButton() {
         addProtocolOptimistic({
           id: `temp-${Date.now()}`,
           name: name,
-          icon: protocolState.icon || '🧪',
+          icon: protocolState.icon || 'bird',
         });
         result = await addProtocol({ ...protocolState, name });
       }

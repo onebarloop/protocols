@@ -2,6 +2,7 @@ import { pgTable, text, timestamp, uuid, jsonb } from 'drizzle-orm/pg-core';
 import { SerializedEditorState } from 'lexical';
 import { user } from './auth-schema';
 import { relations } from 'drizzle-orm';
+import { type Icon } from '@/types/zod-schemas';
 
 export const protocols = pgTable('protocols', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -17,7 +18,7 @@ export const protocols = pgTable('protocols', {
   editorId: text('editor_id').references(() => user.id, {
     onDelete: 'set null',
   }),
-  icon: text('icon').default('🧪').notNull(),
+  icon: text('icon').$type<Icon>().default('bird').notNull(),
 });
 
 export const protocolsRelations = relations(protocols, ({ one }) => ({

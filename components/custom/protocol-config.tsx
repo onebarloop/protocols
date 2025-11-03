@@ -11,6 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Icon } from '@/components/custom/icons';
+import { ICONLIST } from '@/types/zod-schemas';
 
 export default function ProtocolConfig({
   isEditMode,
@@ -39,7 +41,7 @@ export default function ProtocolConfig({
   if (!isEditMode) {
     return (
       <div className="flex h-9 items-center gap-2">
-        <span>{protocolState.icon}</span>
+        <Icon component={protocolState.icon} />
         <h1 className="text-2xl">{protocolState.name}</h1>
       </div>
     );
@@ -48,7 +50,7 @@ export default function ProtocolConfig({
   if (!isEditing) {
     return (
       <div className="flex items-center gap-2">
-        <span>{protocolState.icon}</span>
+        <Icon component={protocolState.icon} />
         <h1 className="text-2xl" onClick={handleClick}>
           {protocolState.name}
         </h1>
@@ -60,7 +62,7 @@ export default function ProtocolConfig({
   }
   return (
     <div className="flex items-center gap-2">
-      <span>{protocolState.icon}</span>
+      <Icon component={protocolState.icon} />
       <input
         ref={inputRef}
         className="w-fit-content border-foreground/10 focus:border-foreground/50 border-b bg-transparent text-2xl focus:outline-none"
@@ -78,8 +80,6 @@ export default function ProtocolConfig({
 function IconSelect() {
   const { protocolDispatch, protocolState } = useDocument();
 
-  const icons = ['🧪', '📄', '📝', '🔬', '📊', '⚗️', '🧬', '🧫', '🧴', '💊'];
-
   return (
     <Select
       value={protocolState.icon}
@@ -91,9 +91,9 @@ function IconSelect() {
         <SelectValue placeholder="Select icon" />
       </SelectTrigger>
       <SelectContent>
-        {icons.map((icon) => (
+        {ICONLIST.map((icon) => (
           <SelectItem key={icon} value={icon}>
-            <span className="text-lg">{icon}</span>
+            <Icon component={icon} />
           </SelectItem>
         ))}
       </SelectContent>
