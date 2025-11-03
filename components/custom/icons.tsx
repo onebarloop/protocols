@@ -5,6 +5,10 @@ import {
   Squirrel,
   Turtle,
   Snail,
+  Worm,
+  Shrimp,
+  Rabbit,
+  Rat,
   type LucideProps,
 } from 'lucide-react';
 
@@ -15,14 +19,18 @@ type IconProps = LucideProps & {
 };
 
 export function Icon(props: IconProps) {
-  const iconMap = {
+  const iconMap: Record<Icon, React.ComponentType<LucideProps>> = {
     bird: Bird,
     fish: Fish,
     bug: Bug,
     squirrel: Squirrel,
     turtle: Turtle,
     snail: Snail,
-  } as const;
+    worm: Worm,
+    shrimp: Shrimp,
+    rabbit: Rabbit,
+    rat: Rat,
+  };
 
   const validateIcon = IconSchema.safeParse(props.component);
   if (!validateIcon.success) {

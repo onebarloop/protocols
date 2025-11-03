@@ -24,6 +24,10 @@ const ICONLIST = [
   'squirrel',
   'turtle',
   'snail',
+  'worm',
+  'shrimp',
+  'rabbit',
+  'rat',
 ] as const;
 
 const IconSchema = z.enum(ICONLIST);
