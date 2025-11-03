@@ -11,9 +11,16 @@ import { User, LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useSession } from '@/lib/contexts/session-context';
 import { Badge } from '../ui/badge';
+import { authClient } from '@/lib/auth/auth-client';
+import { useRouter } from 'next/navigation';
 
 export default function UserMenu() {
-  const { session, user } = useSession();
+  const { user } = useSession();
+  const router = useRouter();
+  async function logout() {
+    await authClient.signOut();
+    router.refresh();
+  }
 
   return (
     <Popover>
@@ -27,7 +34,12 @@ export default function UserMenu() {
           <div className="flex items-center gap-2">
             <h3 className="">Account</h3>
             <Badge>{user.role}</Badge>
-            <Button variant="ghost" size="icon" className="ml-auto h-6 w-6">
+            <Button
+              onClick={logout}
+              variant="ghost"
+              size="icon"
+              className="ml-auto h-6 w-6"
+            >
               <LogOut />
             </Button>
           </div>
