@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { use, useMemo } from 'react';
 import { convertDate } from '@/utils';
 import { useProtocols } from '@/contexts/protocols-context';
-import { Icon } from './icons';
+import { Icon } from './icon';
 
 export default function ProtocolsGrid({
   protocolsPromise,

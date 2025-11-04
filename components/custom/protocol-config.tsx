@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Icon } from '@/components/custom/icons';
+import { Icon } from '@/components/custom/icon';
 import { ICONLIST } from '@/types/zod-schemas';
 
 export default function ProtocolConfig({

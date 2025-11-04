@@ -15,7 +15,7 @@ import { deleteProtocol } from '@/dal/mutations';
 import { toast } from 'sonner';
 import { useProtocols } from '@/contexts/protocols-context';
 import { useSession } from '@/contexts/session-context';
-import { Icon } from './icons';
+import { Icon } from './icon';
 import type { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 
 export function SidebarItem({
