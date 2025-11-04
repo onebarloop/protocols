@@ -56,7 +56,7 @@ export default function Editor({
   editable?: boolean;
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
   className?: string;
-  setHtml: (html: string | null) => void;
+  setHtml?: (html: string | null) => void;
 }) {
   return (
     <div className={cn('bg-background rounded-lg border shadow', className)}>
