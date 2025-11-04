@@ -48,6 +48,7 @@ export default function Editor({
   editable = true,
   onSerializedChange,
   className,
+  setHtml,
 }: {
   editorState?: EditorState;
   editorSerializedState?: SerializedEditorState;
@@ -55,6 +56,7 @@ export default function Editor({
   editable?: boolean;
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
   className?: string;
+  setHtml: (html: string | null) => void;
 }) {
   return (
     <div className={cn('bg-background rounded-lg border shadow', className)}>
@@ -69,7 +71,7 @@ export default function Editor({
         }}
       >
         <TooltipProvider>
-          <Plugins editable={editable} />
+          <Plugins setHtml={setHtml} editable={editable} />
           {(onChange || onSerializedChange) && (
             <OnChangePluginWrapper
               onChange={onChange}

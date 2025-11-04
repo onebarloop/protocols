@@ -28,8 +28,15 @@ import { AutoLinkPlugin } from './plugins/auto-link-plugin';
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin';
 import { FloatingLinkEditorPlugin } from './plugins/floating-link-editor-plugin';
 import { FontSizeToolbarPlugin } from './plugins/toolbar/font-size-plugin';
+import { PDFPlugin } from './plugins/toolbar/pdf-plugin';
 
-export function Plugins({ editable = true }: { editable?: boolean }) {
+export function Plugins({
+  editable = true,
+  setHtml,
+}: {
+  editable?: boolean;
+  setHtml: (html: string | null) => void;
+}) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
 
@@ -66,6 +73,7 @@ export function Plugins({ editable = true }: { editable?: boolean }) {
               <FontBackgroundToolbarPlugin />
               <LinkToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
               <ClearFormattingToolbarPlugin />
+              <PDFPlugin setHtml={setHtml} />
 
               <HistoryToolbarPlugin />
             </div>

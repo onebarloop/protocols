@@ -52,7 +52,7 @@ function Viewer({ html }: { html?: string }) {
     return null;
   }
   return (
-    <PDFViewer key={html} width="100%" height="100%">
+    <PDFViewer key={html} className="h-full w-full">
       <PDF html={html} />
     </PDFViewer>
   );
