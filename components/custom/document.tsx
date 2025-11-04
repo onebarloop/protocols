@@ -20,9 +20,9 @@ const PDFViewer = dynamic(
   },
 );
 
-function PDF({ html }: { html: string }) {
+function PDF({ html, title }: { html: string; title?: string }) {
   return (
-    <Document>
+    <Document title={title}>
       <Page size="A4" orientation="portrait" style={{ padding: 20 }}>
         <Html stylesheet={HTMLSTYLESHEET}>{html}</Html>
       </Page>
@@ -47,13 +47,13 @@ function DownloadLink({ html }: { html?: string }) {
   );
 }
 
-function Viewer({ html }: { html?: string }) {
+function Viewer({ html, title }: { html?: string; title?: string }) {
   if (!html) {
     return null;
   }
   return (
     <PDFViewer key={html} className="h-full w-full">
-      <PDF html={html} />
+      <PDF title={title} html={html} />
     </PDFViewer>
   );
 }

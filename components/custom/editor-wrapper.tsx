@@ -21,7 +21,7 @@ type EditorWrapperProps = {
 };
 
 export default function EditorWrapper(props: EditorWrapperProps) {
-  const { protocolDispatch } = useDocument();
+  const { protocolDispatch, protocolState } = useDocument();
   const [html, setHtml] = useState<string | null>(null);
   const handleSerializedChange = (serializedState: SerializedEditorState) => {
     protocolDispatch({ type: 'setSerializedState', payload: serializedState });
@@ -35,8 +35,15 @@ export default function EditorWrapper(props: EditorWrapperProps) {
         onSerializedChange={handleSerializedChange}
       />
       <Dialog open={!!html} onOpenChange={() => setHtml(null)} modal={true}>
-        <DialogContent className="flex h-[90vh] w-[90vw] max-w-screen! flex-col justify-center p-0">
-          <Viewer html={html || undefined} />
+        <DialogContent className="flex h-[95vh] w-[90vw] max-w-screen! flex-col justify-center gap-0 p-0">
+          <DialogHeader className="p-4 pb-1">
+            <DialogTitle>PDF Preview</DialogTitle>
+            <DialogDescription>
+              This is a preview of your document as a PDF.
+            </DialogDescription>
+            <DialogClose />
+          </DialogHeader>
+          <Viewer title={protocolState.name} html={html || undefined} />
         </DialogContent>
       </Dialog>
     </>

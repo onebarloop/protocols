@@ -21,7 +21,7 @@ export function PDFPlugin({
 
   return (
     <Button variant="outline" size="icon" onClick={exportToPDF}>
-      <Download className="h-4 w-4" />
+      <span className="text-xs">PDF</span>
     </Button>
   );
 }
