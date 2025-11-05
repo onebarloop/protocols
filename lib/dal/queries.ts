@@ -1,4 +1,4 @@
-'use server';
+import 'server-only';
 
 import { db } from '@/db/index';
 import { unstable_cache } from 'next/cache';
@@ -39,16 +39,6 @@ async function getAllProtocols() {
       tags: ['protocols'],
     },
   )();
-}
-
-export async function getProtocolClient(id: string) {
-  return await db.query.protocols.findFirst({
-    where: (protocols, { eq }) => eq(protocols.id, id),
-    with: {
-      author: true,
-      editor: true,
-    },
-  });
 }
 
 async function getProtocolById(id: string) {

@@ -8,6 +8,8 @@ import { getSession } from '@/auth/get-session';
 import { SuccessMessage } from '@/types/types';
 import { NewProtocol, Protocol } from '@/types/zod-schemas';
 import { ProtocolSchema, NewProtocolSchema } from '@/types/zod-schemas';
+import { z } from 'zod';
+import { unstable_cache } from 'next/cache';
 
 export async function addProtocol(
   protocol: NewProtocol,
@@ -164,4 +166,52 @@ export async function updateProtocol(
       message: 'Failed to update protocol. Error in database operation',
     };
   }
+}
+
+export async function getProtocolById(
+  id: string,
+): Promise<
+  | { success: false; message: string }
+  | { success: true; message: string; protocol: Protocol }
+> {
+  const validation = z.uuid().safeParse(id);
+  if (!validation.success) {
+    return {
+      success: false,
+      message: 'Wrong ID',
+    };
+  }
+
+  const session = await getSession();
+  if (!session) {
+    return {
+      success: false,
+      message: 'User not authenticated',
+    };
+  }
+
+  const data = await unstable_cache(
+    async () => {
+      return await db.query.protocols.findFirst({
+        where: (protocols, { eq }) => eq(protocols.id, id),
+      });
+    },
+    ['protocol', id],
+    {
+      tags: [`protocol-${id}`],
+    },
+  )();
+
+  if (!data) {
+    return {
+      success: false,
+      message: 'Protocol not found',
+    };
+  }
+
+  return {
+    success: true,
+    message: 'Protocol fetched successfully',
+    protocol: data,
+  };
 }

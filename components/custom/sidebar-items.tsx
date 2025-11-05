@@ -11,7 +11,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { ReactNode, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
-import { deleteProtocol } from '@/dal/mutations';
+import { deleteProtocol } from '@/dal/server-actions';
 import { toast } from 'sonner';
 import { useProtocols } from '@/contexts/protocols-context';
 import { useSession } from '@/contexts/session-context';

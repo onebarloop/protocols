@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useDocument } from '@/contexts/document-context';
-import { addProtocol, updateProtocol } from '@/dal/mutations';
+import { addProtocol, updateProtocol } from '@/dal/server-actions';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
 import { isExistingProtocol } from '@/types/helpers';
