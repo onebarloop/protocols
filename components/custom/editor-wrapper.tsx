@@ -30,8 +30,8 @@ export default function EditorWrapper(props: EditorWrapperProps) {
   return (
     <>
       <Editor
-        setHtml={setHtml}
         {...props}
+        setHtml={setHtml}
         onSerializedChange={handleSerializedChange}
       />
       <Dialog open={!!html} onOpenChange={() => setHtml(null)} modal={true}>
