@@ -14,6 +14,7 @@ import {
   SidebarHeader,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
+import CreatePDF from './create-pdf';
 
 import { SidebarItem, SidebarProtocolsList } from './sidebar-items';
 
@@ -26,6 +27,7 @@ export async function AppSidebar() {
         <span className="upper font-thin group-data-[collapsible=icon]:hidden">
           Protocols
         </span>
+        <CreatePDF />
         <UserMenu />
       </SidebarHeader>
       <SidebarSeparator className="w-auto!" />
