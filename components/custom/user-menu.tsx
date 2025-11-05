@@ -23,6 +23,7 @@ export default function UserMenu() {
       fetchOptions: {
         onSuccess: () => {
           router.push('/login');
+          router.refresh();
         },
       },
     });

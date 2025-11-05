@@ -53,6 +53,7 @@ export default function LoginForm() {
           });
           setTimeout(() => {
             router.push(callbackUrl);
+            router.refresh();
           }, 1500);
         },
         onError: (ctx) => {
