@@ -43,11 +43,13 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
         <span>{protocol.name}</span>
       </h2>
 
-      <Editor
-        className="h-96 grow overflow-auto border-0 shadow-none"
-        editable={false}
-        editorSerializedState={protocol.serializedState}
-      />
+      <div className="h-96 grow overflow-auto">
+        <Editor
+          className="pointer-events-none border-0 shadow-none"
+          editable={false}
+          editorSerializedState={protocol.serializedState}
+        />
+      </div>
       <div className="flex flex-wrap justify-between gap-x-4 border-t px-4 py-2">
         <p className="text-muted-foreground text-xs">
           {convertDate(protocol.createdAt)}
