@@ -8,10 +8,8 @@ import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 import { LoginSchema } from '@/types/zod-schemas';
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
 
 export default function LoginForm() {
-  const callbackUrl = useSearchParams().get('callbackUrl') || '/';
   const router = useRouter();
   const [email, setEmail] = useState('guest@test.de');
   const [password, setPassword] = useState('password123');
@@ -52,7 +50,7 @@ export default function LoginForm() {
             description: 'Forwarding...',
           });
           setTimeout(() => {
-            router.push(callbackUrl);
+            router.push('/');
             router.refresh();
           }, 1500);
         },
