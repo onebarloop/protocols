@@ -13,10 +13,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useState, useEffect } from 'react';
-import type { SerializedEditorState } from 'lexical';
+import { toast } from 'sonner';
 import type { Protocol } from '@/types/zod-schemas';
 import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 import { hasSerializedState } from '@/types/helpers';
+import { set } from 'zod';
 
 export default function CreatePDF({
   protocolData,
@@ -29,6 +30,7 @@ export default function CreatePDF({
     name: string;
     html: string;
   } | null>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function create() {
@@ -39,6 +41,7 @@ export default function CreatePDF({
         const result = await getProtocolById(protocolData.id);
         if (!result.success) {
           console.error(result.error);
+          toast.error(result.error);
           return;
         }
         const { protocol: protocolResult } = result.data;
@@ -54,6 +57,7 @@ export default function CreatePDF({
           html: $generateHtmlFromNodes(editor, null),
         });
       });
+      setOpen(true);
     }
     create();
   }, [protocolData]);
@@ -65,7 +69,7 @@ export default function CreatePDF({
   };
 
   return (
-    <Dialog open={true} onOpenChange={handleOpenChange} modal={true}>
+    <Dialog open={open} onOpenChange={handleOpenChange} modal={true}>
       <DialogContent className="flex h-[95vh] w-[90vw] max-w-screen! flex-col justify-center gap-0 p-0">
         <DialogHeader className="p-4 pb-1">
           <DialogTitle>PDF Preview</DialogTitle>
@@ -74,7 +78,13 @@ export default function CreatePDF({
           </DialogDescription>
           <DialogClose />
         </DialogHeader>
-        <Viewer title={pdf?.name || 'Title'} html={pdf?.html} />
+        {pdf ? (
+          <Viewer title={pdf.name} html={pdf.html} />
+        ) : (
+          <div className="text-muted-foreground flex h-full items-center justify-center">
+            Loading PDF preview...
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
