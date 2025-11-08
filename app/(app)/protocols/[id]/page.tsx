@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { DocumentProvider } from '@/contexts/document-context';
 import SaveDocumentButton from '@/components/custom/save-document-button';
 import Link from 'next/link';
-import { Pencil, X } from 'lucide-react';
+import { Pencil, X, Cog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProtocolConfig from '@/components/custom/protocol-config';
 import ControlPanel from '@/components/custom/control-panel';
@@ -11,6 +11,7 @@ import { getSession } from '@/auth/get-session';
 import { redirect } from 'next/navigation';
 import EditorWrapper from '@/components/custom/editor-wrapper';
 import { convertDate } from '@/utils';
+import ProtocolActionDropdown from '@/components/custom/protocol-action-dropdown';
 
 export default async function ProtocolPage({
   params,
@@ -40,6 +41,7 @@ export default async function ProtocolPage({
       <section className="max-w-a4 relative mx-auto w-full">
         <div className="mb-8">
           <ProtocolConfig isEditMode={isEditMode} />
+
           <p className="text-foreground/50 text-sm">
             {convertDate(protocol.createdAt)}
             <br />© by{' '}
@@ -65,12 +67,19 @@ export default async function ProtocolPage({
             </Button>
           </>
         ) : (
-          <Button variant="outline" asChild>
-            <Link href={`/protocols/${id}?edit=true`}>
-              <Pencil />
-              Edit protocol
-            </Link>
-          </Button>
+          <>
+            <Button variant="outline" asChild>
+              <Link href={`/protocols/${id}?edit=true`}>
+                <Pencil />
+                Edit protocol
+              </Link>
+            </Button>
+            <ProtocolActionDropdown protocolData={protocol}>
+              <Button variant="outline" size="icon">
+                <Cog />
+              </Button>
+            </ProtocolActionDropdown>
+          </>
         )}
       </ControlPanel>
     </DocumentProvider>

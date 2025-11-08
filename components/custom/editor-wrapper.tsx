@@ -2,7 +2,7 @@
 import Editor from '../editor/editor';
 import { useDocument } from '@/contexts/document-context';
 import { SerializedEditorState, EditorState } from 'lexical';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Viewer } from './document';
 import {
   Dialog,

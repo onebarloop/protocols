@@ -7,16 +7,15 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { useParams, useRouter } from 'next/navigation';
-import { ReactNode, useTransition } from 'react';
-import { Button } from '../ui/button';
-import { Trash } from 'lucide-react';
-import { deleteProtocol } from '@/dal/mutations';
-import { toast } from 'sonner';
+import { useParams } from 'next/navigation';
+import { ReactNode } from 'react';
+
 import { useProtocols } from '@/contexts/protocols-context';
-import { useSession } from '@/contexts/session-context';
+
 import { Icon } from './icon';
 import type { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
+
+import ProtocolActionDropdown from './protocol-action-dropdown';
 
 export function SidebarItem({
   name,
@@ -60,30 +59,7 @@ function SidebarProtocolItem({
   protocol: ProtocolNavItemsQueryResult;
 }) {
   const { id } = useParams();
-  const router = useRouter();
-  const { user } = useSession();
-  const { deleteProtocolOptimistic } = useProtocols();
-  const [isPending, startTransition] = useTransition();
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    startTransition(async () => {
-      deleteProtocolOptimistic(protocol.id);
-
-      const result = await deleteProtocol(protocol.id);
-
-      if (result.success) {
-        toast.success(result.message);
-        if (id === protocol.id) {
-          router.push('/protocols');
-        }
-      } else {
-        toast.error(result.message);
-      }
-    });
-  };
   return (
     <SidebarMenuSubItem key={protocol.id}>
       <SidebarMenuSubButton
@@ -91,23 +67,23 @@ function SidebarProtocolItem({
         isActive={id === protocol.id}
         className="h-auto min-h-fit"
       >
-        <Link
-          className="p-1"
-          href={`/protocols/${protocol.id}`}
-          prefetch={true}
-        >
-          <Icon component={protocol.icon} />
-          <span className="line-clamp-2">{protocol.name}</span>
-          <Button
-            disabled={user.role === 'guest' || isPending}
-            size="icon"
-            variant="ghost"
-            className="ml-auto h-6 w-6 p-0"
-            onClick={handleClick}
+        <div className="flex w-full items-center gap-0!">
+          <Link
+            className="flex min-w-0 grow items-center gap-2 p-1"
+            href={`/protocols/${protocol.id}`}
+            prefetch={true}
           >
-            <Trash />
-          </Button>
-        </Link>
+            <Icon component={protocol.icon} className="size-4 shrink-0" />
+            <span className="line-clamp-2 overflow-ellipsis">
+              {protocol.name}
+            </span>
+          </Link>
+          <ProtocolActionDropdown
+            className="ml-auto shrink-0"
+            protocolData={protocol}
+            align="start"
+          />
+        </div>
       </SidebarMenuSubButton>
     </SidebarMenuSubItem>
   );
