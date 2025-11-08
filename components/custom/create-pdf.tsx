@@ -17,7 +17,6 @@ import { toast } from 'sonner';
 import type { Protocol } from '@/types/zod-schemas';
 import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 import { hasSerializedState } from '@/types/helpers';
-import { set } from 'zod';
 
 export default function CreatePDF({
   protocolData,
