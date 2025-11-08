@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 import type { Protocol } from '@/types/zod-schemas';
 import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
 import { hasSerializedState } from '@/types/helpers';
+import { nodes } from '@/components/editor/nodes';
 
 export default function CreatePDF({
   protocolData,
@@ -46,7 +47,7 @@ export default function CreatePDF({
         const { protocol: protocolResult } = result.data;
         protocol = protocolResult;
       }
-      const editor = createEditor();
+      const editor = createEditor({ nodes });
       const state = editor.parseEditorState(protocol.serializedState);
       editor.setEditorState(state);
 
