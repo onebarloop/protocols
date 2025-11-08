@@ -8,15 +8,25 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { useParams, useRouter } from 'next/navigation';
-import { ReactNode, useTransition } from 'react';
+import { ReactNode, useTransition, useState, lazy, Suspense } from 'react';
 import { Button } from '../ui/button';
-import { Trash } from 'lucide-react';
+import { Trash, EllipsisVertical } from 'lucide-react';
 import { deleteProtocol } from '@/dal/server-actions';
 import { toast } from 'sonner';
 import { useProtocols } from '@/contexts/protocols-context';
 import { useSession } from '@/contexts/session-context';
 import { Icon } from './icon';
 import type { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+const CreatePDF = lazy(() => import('./create-pdf'));
 
 export function SidebarItem({
   name,
@@ -60,15 +70,45 @@ function SidebarProtocolItem({
   protocol: ProtocolNavItemsQueryResult;
 }) {
   const { id } = useParams();
+
+  return (
+    <SidebarMenuSubItem key={protocol.id}>
+      <SidebarMenuSubButton
+        asChild
+        isActive={id === protocol.id}
+        className="h-auto min-h-fit"
+      >
+        <div className="flex w-full items-center gap-0!">
+          <Link
+            className="flex grow items-center gap-2 p-1"
+            href={`/protocols/${protocol.id}`}
+            prefetch={true}
+          >
+            <Icon component={protocol.icon} className="size-4" />
+            <span className="line-clamp-2">{protocol.name}</span>
+          </Link>
+          <SidebarDropdown protocol={protocol} className="ml-auto" />
+        </div>
+      </SidebarMenuSubButton>
+    </SidebarMenuSubItem>
+  );
+}
+
+function SidebarDropdown({
+  className,
+  protocol,
+}: {
+  className?: string;
+  protocol: ProtocolNavItemsQueryResult;
+}) {
   const router = useRouter();
   const { user } = useSession();
   const { deleteProtocolOptimistic } = useProtocols();
   const [isPending, startTransition] = useTransition();
+  const [showPDF, setShowPDF] = useState(false);
+  const { id } = useParams();
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
+  const handleDelete = () => {
     startTransition(async () => {
       deleteProtocolOptimistic(protocol.id);
 
@@ -84,31 +124,33 @@ function SidebarProtocolItem({
       }
     });
   };
+
   return (
-    <SidebarMenuSubItem key={protocol.id}>
-      <SidebarMenuSubButton
-        asChild
-        isActive={id === protocol.id}
-        className="h-auto min-h-fit"
-      >
-        <Link
-          className="p-1"
-          href={`/protocols/${protocol.id}`}
-          prefetch={true}
-        >
-          <Icon component={protocol.icon} />
-          <span className="line-clamp-2">{protocol.name}</span>
-          <Button
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger className={className}>
+          <EllipsisVertical />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={() => setShowPDF(true)}>
+            Create PDF
+          </DropdownMenuItem>
+          <DropdownMenuItem
             disabled={user.role === 'guest' || isPending}
-            size="icon"
-            variant="ghost"
-            className="ml-auto h-6 w-6 p-0"
-            onClick={handleClick}
+            onSelect={handleDelete}
           >
-            <Trash />
-          </Button>
-        </Link>
-      </SidebarMenuSubButton>
-    </SidebarMenuSubItem>
+            Delete Protocol
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {showPDF && (
+        <Suspense fallback={null}>
+          <CreatePDF id={protocol.id} onClose={() => setShowPDF(false)} />
+        </Suspense>
+      )}
+    </>
   );
 }
