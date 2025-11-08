@@ -21,10 +21,14 @@ import { cn } from '@/lib/utils';
 
 export default function ProtocolActionDropdown({
   className,
+  align = 'end',
   protocol,
+  children,
 }: {
   className?: string;
+  align?: 'start' | 'center' | 'end';
   protocol: ProtocolNavItemsQueryResult;
+  children?: React.ReactNode;
 }) {
   const router = useRouter();
   const { user } = useSession();
@@ -58,10 +62,15 @@ export default function ProtocolActionDropdown({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={cn('', className)}>
-          <EllipsisVertical />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        {children ? (
+          <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+        ) : (
+          <DropdownMenuTrigger className={cn('', className)}>
+            <EllipsisVertical />
+          </DropdownMenuTrigger>
+        )}
+
+        <DropdownMenuContent align={align}>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={handlePDF}>Create PDF</DropdownMenuItem>

@@ -7,6 +7,7 @@ import { use, useMemo } from 'react';
 import { convertDate } from '@/utils';
 import { useProtocols } from '@/contexts/protocols-context';
 import { Icon } from './icon';
+import ProtocolActionDropdown from './protocol-action-dropdown';
 
 export default function ProtocolsGrid({
   protocolsPromise,
@@ -32,32 +33,33 @@ export default function ProtocolsGrid({
 
 function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
   return (
-    <Link
-      href={`/protocols/${protocol.id}`}
+    <div
       key={protocol.id}
-      prefetch={true}
       className="hover:border-accent-foreground/40 group flex flex-col overflow-hidden rounded-lg border shadow transition-all"
     >
       <h2 className="bg-card/60 group-hover:bg-card flex flex-wrap items-center gap-2 border-b px-4 py-3 transition-colors">
         <Icon component={protocol.icon} className="h-5 w-5" />
         <span>{protocol.name}</span>
+        <ProtocolActionDropdown protocol={protocol} className="ml-auto" />
       </h2>
 
-      <div className="h-96 grow overflow-auto">
-        <Editor
-          className="pointer-events-none border-0 shadow-none"
-          editable={false}
-          editorSerializedState={protocol.serializedState}
-        />
-      </div>
-      <div className="flex flex-wrap justify-between gap-x-4 border-t px-4 py-2">
-        <p className="text-muted-foreground text-xs">
-          {convertDate(protocol.createdAt)}
-        </p>
-        <p className="text-muted-foreground text-xs">
-          by {protocol.author?.name || 'deleted user'}
-        </p>
-      </div>
-    </Link>
+      <Link href={`/protocols/${protocol.id}`}>
+        <div className="h-96 grow overflow-auto">
+          <Editor
+            className="pointer-events-none border-0 shadow-none"
+            editable={false}
+            editorSerializedState={protocol.serializedState}
+          />
+        </div>
+        <div className="flex flex-wrap justify-between gap-x-4 border-t px-4 py-2">
+          <p className="text-muted-foreground text-xs">
+            {convertDate(protocol.createdAt)}
+          </p>
+          <p className="text-muted-foreground text-xs">
+            by {protocol.author?.name || 'deleted user'}
+          </p>
+        </div>
+      </Link>
+    </div>
   );
 }

@@ -81,6 +81,7 @@ function SidebarProtocolItem({
           <ProtocolActionDropdown
             className="ml-auto shrink-0"
             protocol={protocol}
+            align="start"
           />
         </div>
       </SidebarMenuSubButton>
