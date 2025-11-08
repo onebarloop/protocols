@@ -27,16 +27,17 @@ export default function CreatePDF() {
       '1abf3f0e-b3d3-4dd0-bcb2-fe6055b2bc53',
     );
     if (!result.success) {
-      console.error(result.message);
+      console.error(result.error);
       return;
     }
+    const { protocol } = result.data;
     const editor = createEditor();
-    const state = editor.parseEditorState(result.protocol.serializedState);
+    const state = editor.parseEditorState(protocol.serializedState);
     editor.setEditorState(state);
 
     editor.read(() => {
       setPdf({
-        name: result.protocol.name,
+        name: protocol.name,
         html: $generateHtmlFromNodes(editor, null),
       });
     });

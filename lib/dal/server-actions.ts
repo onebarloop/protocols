@@ -5,15 +5,18 @@ import { db } from '@/db/index';
 import { protocols } from '@/db/schema/protocols';
 import { eq } from 'drizzle-orm';
 import { getSession } from '@/auth/get-session';
-import { SuccessMessage } from '@/types/types';
 import { NewProtocol, Protocol } from '@/types/zod-schemas';
 import { ProtocolSchema, NewProtocolSchema } from '@/types/zod-schemas';
 import { z } from 'zod';
 import { unstable_cache } from 'next/cache';
 
+type Result<T> =
+  | { success: true; data: T; message: string }
+  | { success: false; error: string };
+
 export async function addProtocol(
   protocol: NewProtocol,
-): Promise<SuccessMessage> {
+): Promise<Result<{ protocolId: string }>> {
   const validationResult = NewProtocolSchema.safeParse(protocol);
 
   if (!validationResult.success) {
@@ -23,7 +26,7 @@ export async function addProtocol(
     );
     return {
       success: false,
-      message: 'Failed to save protocol: Invalid data',
+      error: 'Failed to save protocol: Invalid data',
     };
   }
 
@@ -33,14 +36,14 @@ export async function addProtocol(
   if (!session) {
     return {
       success: false,
-      message: 'User not authenticated',
+      error: 'User not authenticated',
     };
   }
 
   if (session.user.role === 'guest') {
     return {
       success: false,
-      message: 'Guest users cannot save protocols. Please sign up.',
+      error: 'Guest users cannot save protocols. Please sign up.',
     };
   }
 
@@ -59,54 +62,64 @@ export async function addProtocol(
     return {
       success: true,
       message: 'Protocol saved successfully',
-      protocolId: data.id,
+      data: {
+        protocolId: data.id,
+      },
     };
   } catch (error) {
     console.error('Error saving protocol:', error);
     return {
       success: false,
-      message: 'Failed to save protocol. Error in database operation',
+      error: 'Failed to save protocol. Error in database operation',
     };
   }
 }
 
-export async function deleteProtocol(id: string): Promise<SuccessMessage> {
+export async function deleteProtocol(
+  id: string,
+): Promise<Result<{ protocolId: string }>> {
   const session = await getSession();
   if (!session) {
     return {
       success: false,
-      message: 'User not authenticated',
+      error: 'User not authenticated',
     };
   }
 
   if (session.user.role === 'guest') {
     return {
       success: false,
-      message: 'Guest users cannot delete protocols. Please sign up.',
+      error: 'Guest users cannot delete protocols. Please sign up.',
     };
   }
 
   try {
-    await db.delete(protocols).where(eq(protocols.id, id));
+    const [data] = await db
+      .delete(protocols)
+      .where(eq(protocols.id, id))
+      .returning({ id: protocols.id });
     revalidatePath(`/protocols/${id}`);
     revalidatePath('/protocols');
     updateTag('protocols-nav');
     return {
       success: true,
       message: 'Protocol deleted successfully',
+      data: {
+        protocolId: data.id,
+      },
     };
   } catch (error) {
     console.error('Error deleting protocol:', error);
     return {
       success: false,
-      message: 'Failed to delete protocol. Error in database operation',
+      error: 'Failed to delete protocol. Error in database operation',
     };
   }
 }
 
 export async function updateProtocol(
   protocol: Protocol,
-): Promise<SuccessMessage> {
+): Promise<Result<{ protocolId: string }>> {
   const validationResult = ProtocolSchema.safeParse(protocol);
 
   if (!validationResult.success) {
@@ -116,7 +129,7 @@ export async function updateProtocol(
     );
     return {
       success: false,
-      message: 'Failed to update protocol: Invalid data',
+      error: 'Failed to update protocol: Invalid data',
     };
   }
 
@@ -126,14 +139,14 @@ export async function updateProtocol(
   if (!session) {
     return {
       success: false,
-      message: 'User not authenticated',
+      error: 'User not authenticated',
     };
   }
 
   if (session.user.role === 'guest') {
     return {
       success: false,
-      message: 'Guest users cannot edit protocols. Please sign up.',
+      error: 'Guest users cannot edit protocols. Please sign up.',
     };
   }
 
@@ -157,28 +170,25 @@ export async function updateProtocol(
     return {
       success: true,
       message: 'Protocol updated successfully',
-      protocolId: data.id,
+      data: { protocolId: data.id },
     };
   } catch (error) {
     console.error('Error updating protocol:', error);
     return {
       success: false,
-      message: 'Failed to update protocol. Error in database operation',
+      error: 'Failed to update protocol. Error in database operation',
     };
   }
 }
 
 export async function getProtocolById(
   id: string,
-): Promise<
-  | { success: false; message: string }
-  | { success: true; message: string; protocol: Protocol }
-> {
+): Promise<Result<{ protocol: Protocol }>> {
   const validation = z.uuid().safeParse(id);
   if (!validation.success) {
     return {
       success: false,
-      message: 'Wrong ID',
+      error: 'Wrong ID',
     };
   }
 
@@ -186,7 +196,7 @@ export async function getProtocolById(
   if (!session) {
     return {
       success: false,
-      message: 'User not authenticated',
+      error: 'User not authenticated',
     };
   }
 
@@ -205,13 +215,15 @@ export async function getProtocolById(
   if (!data) {
     return {
       success: false,
-      message: 'Protocol not found',
+      error: 'Protocol not found',
     };
   }
 
   return {
     success: true,
     message: 'Protocol fetched successfully',
-    protocol: data,
+    data: {
+      protocol: data,
+    },
   };
 }

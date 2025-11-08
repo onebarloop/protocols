@@ -43,7 +43,7 @@ export default function SaveDocumentButton() {
       if (result.success) {
         toast.success(result.message);
       } else {
-        toast.error(result.message);
+        toast.error(result.error);
       }
     });
   };

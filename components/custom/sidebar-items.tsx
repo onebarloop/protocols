@@ -80,7 +80,7 @@ function SidebarProtocolItem({
           router.push('/protocols');
         }
       } else {
-        toast.error(result.message);
+        toast.error(result.error);
       }
     });
   };
