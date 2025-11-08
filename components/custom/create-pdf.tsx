@@ -13,12 +13,16 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useState, useEffect } from 'react';
+import type { SerializedEditorState } from 'lexical';
+import type { Protocol } from '@/types/zod-schemas';
+import { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
+import { hasSerializedState } from '@/types/helpers';
 
 export default function CreatePDF({
-  id,
+  protocolData,
   onClose,
 }: {
-  id: string;
+  protocolData: Protocol | ProtocolNavItemsQueryResult;
   onClose?: () => void;
 }) {
   const [pdf, setPdf] = useState<{
@@ -28,12 +32,18 @@ export default function CreatePDF({
 
   useEffect(() => {
     async function create() {
-      const result = await getProtocolById(id);
-      if (!result.success) {
-        console.error(result.error);
-        return;
+      let protocol: Protocol | null = null;
+      if (hasSerializedState(protocolData)) {
+        protocol = protocolData;
+      } else {
+        const result = await getProtocolById(protocolData.id);
+        if (!result.success) {
+          console.error(result.error);
+          return;
+        }
+        const { protocol: protocolResult } = result.data;
+        protocol = protocolResult;
       }
-      const { protocol } = result.data;
       const editor = createEditor();
       const state = editor.parseEditorState(protocol.serializedState);
       editor.setEditorState(state);
@@ -46,7 +56,7 @@ export default function CreatePDF({
       });
     }
     create();
-  }, [id]);
+  }, [protocolData]);
 
   const handleOpenChange = (open: boolean) => {
     if (!open && onClose) {

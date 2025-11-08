@@ -80,7 +80,7 @@ function SidebarProtocolItem({
           </Link>
           <ProtocolActionDropdown
             className="ml-auto shrink-0"
-            protocol={protocol}
+            protocolData={protocol}
             align="start"
           />
         </div>

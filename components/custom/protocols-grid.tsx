@@ -40,7 +40,7 @@ function ProtocolCard({ protocol }: { protocol: AllProtocolsQueryResult }) {
       <h2 className="bg-card/60 group-hover:bg-card flex flex-wrap items-center gap-2 border-b px-4 py-3 transition-colors">
         <Icon component={protocol.icon} className="h-5 w-5" />
         <span>{protocol.name}</span>
-        <ProtocolActionDropdown protocol={protocol} className="ml-auto" />
+        <ProtocolActionDropdown protocolData={protocol} className="ml-auto" />
       </h2>
 
       <Link href={`/protocols/${protocol.id}`}>

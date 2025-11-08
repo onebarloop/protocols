@@ -74,7 +74,7 @@ export default async function ProtocolPage({
                 Edit protocol
               </Link>
             </Button>
-            <ProtocolActionDropdown protocol={protocol}>
+            <ProtocolActionDropdown protocolData={protocol}>
               <Button variant="outline" size="icon">
                 <Cog />
               </Button>

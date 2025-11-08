@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { useProtocols } from '@/contexts/protocols-context';
 import { useSession } from '@/contexts/session-context';
 import type { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
+import type { Protocol } from '@/types/zod-schemas';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,17 +18,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
 
 export default function ProtocolActionDropdown({
   className,
   align = 'end',
-  protocol,
+  protocolData,
   children,
 }: {
   className?: string;
   align?: 'start' | 'center' | 'end';
-  protocol: ProtocolNavItemsQueryResult;
+  protocolData: ProtocolNavItemsQueryResult | Protocol;
   children?: React.ReactNode;
 }) {
   const router = useRouter();
@@ -40,13 +40,13 @@ export default function ProtocolActionDropdown({
 
   const handleDelete = () => {
     startTransition(async () => {
-      deleteProtocolOptimistic(protocol.id);
+      deleteProtocolOptimistic(protocolData.id);
 
-      const result = await deleteProtocol(protocol.id);
+      const result = await deleteProtocol(protocolData.id);
 
       if (result.success) {
         toast.success(result.message);
-        if (id === protocol.id) {
+        if (id === protocolData.id) {
           router.push('/protocols');
         }
       } else {
@@ -65,7 +65,7 @@ export default function ProtocolActionDropdown({
         {children ? (
           <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
         ) : (
-          <DropdownMenuTrigger className={cn('', className)}>
+          <DropdownMenuTrigger className={className}>
             <EllipsisVertical />
           </DropdownMenuTrigger>
         )}
@@ -85,7 +85,7 @@ export default function ProtocolActionDropdown({
 
       {showPDF && (
         <Suspense fallback={null}>
-          <CreatePDF id={protocol.id} onClose={handlePDF} />
+          <CreatePDF protocolData={protocolData} onClose={handlePDF} />
         </Suspense>
       )}
     </>
