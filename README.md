@@ -12,7 +12,7 @@ My main focus is to provide a smooth and fast user experience, leveraging the th
 - **Database:** [Supabase](https://supabase.com/) with [Drizzle ORM](https://orm.drizzle.team/)
 - **Schema validation:** [Zod 4](https://zod.dev/)
 - **Auth:** [Better Auth](https://www.better-auth.com/)
-- **PDF Export:** [React-pdf](https://react-pdf.org/) (not implemented yet)
+- **PDF Export:** [React-pdf](https://react-pdf.org/)
 
 ## Prerequisites
 
@@ -74,8 +74,5 @@ My main focus is to provide a smooth and fast user experience, leveraging the th
 
 This project is in active development. Many features are not yet implemented, such as:
 
-- Complete WYSIWYG-functionality
-- Account based auth and role restrictions
 - User and account management dashboard
 - Search and filter functionality for keywords in /protocols page
-- PDF generation
