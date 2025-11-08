@@ -7,26 +7,15 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { useParams, useRouter } from 'next/navigation';
-import { ReactNode, useTransition, useState, lazy, Suspense } from 'react';
-import { Button } from '../ui/button';
-import { Trash, EllipsisVertical } from 'lucide-react';
-import { deleteProtocol } from '@/dal/server-actions';
-import { toast } from 'sonner';
+import { useParams } from 'next/navigation';
+import { ReactNode } from 'react';
+
 import { useProtocols } from '@/contexts/protocols-context';
-import { useSession } from '@/contexts/session-context';
+
 import { Icon } from './icon';
 import type { ProtocolNavItemsQueryResult } from '@/lib/dal/queries';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
-const CreatePDF = lazy(() => import('./create-pdf'));
+import ProtocolActionDropdown from './protocol-action-dropdown';
 
 export function SidebarItem({
   name,
@@ -89,70 +78,12 @@ function SidebarProtocolItem({
               {protocol.name}
             </span>
           </Link>
-          <SidebarDropdown protocol={protocol} />
+          <ProtocolActionDropdown
+            className="ml-auto shrink-0"
+            protocol={protocol}
+          />
         </div>
       </SidebarMenuSubButton>
     </SidebarMenuSubItem>
-  );
-}
-
-function SidebarDropdown({
-  className,
-  protocol,
-}: {
-  className?: string;
-  protocol: ProtocolNavItemsQueryResult;
-}) {
-  const router = useRouter();
-  const { user } = useSession();
-  const { deleteProtocolOptimistic } = useProtocols();
-  const [isPending, startTransition] = useTransition();
-  const [showPDF, setShowPDF] = useState(false);
-  const { id } = useParams();
-
-  const handleDelete = () => {
-    startTransition(async () => {
-      deleteProtocolOptimistic(protocol.id);
-
-      const result = await deleteProtocol(protocol.id);
-
-      if (result.success) {
-        toast.success(result.message);
-        if (id === protocol.id) {
-          router.push('/protocols');
-        }
-      } else {
-        toast.error(result.error);
-      }
-    });
-  };
-
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger className="ml-auto shrink-0">
-          <EllipsisVertical />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onSelect={() => setShowPDF(true)}>
-            Create PDF
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={user.role === 'guest' || isPending}
-            onSelect={handleDelete}
-          >
-            Delete Protocol
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      {showPDF && (
-        <Suspense fallback={null}>
-          <CreatePDF id={protocol.id} onClose={() => setShowPDF(false)} />
-        </Suspense>
-      )}
-    </>
   );
 }
