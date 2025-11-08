@@ -80,12 +80,14 @@ function SidebarProtocolItem({
       >
         <div className="flex w-full items-center gap-0!">
           <Link
-            className="flex grow items-center gap-2 p-1"
+            className="flex min-w-0 grow items-center gap-2 p-1"
             href={`/protocols/${protocol.id}`}
             prefetch={true}
           >
             <Icon component={protocol.icon} className="size-4 shrink-0" />
-            <span className="line-clamp-2 break-all">{protocol.name}</span>
+            <span className="line-clamp-2 overflow-ellipsis">
+              {protocol.name}
+            </span>
           </Link>
           <SidebarDropdown protocol={protocol} />
         </div>
