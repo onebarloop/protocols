@@ -14,9 +14,10 @@ type Result<T> =
   | { success: true; data: T; message: string }
   | { success: false; error: string };
 
-export async function addProtocol(
-  protocol: NewProtocol,
-): Promise<Result<{ protocolId: string }>> {
+type IdResult = Result<{ protocolId: string }>;
+type ProtocolResult = Result<{ protocol: Protocol }>;
+
+export async function addProtocol(protocol: NewProtocol): Promise<IdResult> {
   const validationResult = NewProtocolSchema.safeParse(protocol);
 
   if (!validationResult.success) {
@@ -75,9 +76,7 @@ export async function addProtocol(
   }
 }
 
-export async function deleteProtocol(
-  id: string,
-): Promise<Result<{ protocolId: string }>> {
+export async function deleteProtocol(id: string): Promise<IdResult> {
   const session = await getSession();
   if (!session) {
     return {
@@ -117,9 +116,7 @@ export async function deleteProtocol(
   }
 }
 
-export async function updateProtocol(
-  protocol: Protocol,
-): Promise<Result<{ protocolId: string }>> {
+export async function updateProtocol(protocol: Protocol): Promise<IdResult> {
   const validationResult = ProtocolSchema.safeParse(protocol);
 
   if (!validationResult.success) {
@@ -181,9 +178,7 @@ export async function updateProtocol(
   }
 }
 
-export async function getProtocolById(
-  id: string,
-): Promise<Result<{ protocol: Protocol }>> {
+export async function getProtocolById(id: string): Promise<ProtocolResult> {
   const validation = z.uuid().safeParse(id);
   if (!validation.success) {
     return {
