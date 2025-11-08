@@ -84,10 +84,10 @@ function SidebarProtocolItem({
             href={`/protocols/${protocol.id}`}
             prefetch={true}
           >
-            <Icon component={protocol.icon} className="size-4" />
-            <span className="line-clamp-2">{protocol.name}</span>
+            <Icon component={protocol.icon} className="size-4 shrink-0" />
+            <span className="line-clamp-2 break-all">{protocol.name}</span>
           </Link>
-          <SidebarDropdown protocol={protocol} className="ml-auto" />
+          <SidebarDropdown protocol={protocol} />
         </div>
       </SidebarMenuSubButton>
     </SidebarMenuSubItem>
@@ -128,7 +128,7 @@ function SidebarDropdown({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={className}>
+        <DropdownMenuTrigger className="ml-auto shrink-0">
           <EllipsisVertical />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
